@@ -25,7 +25,7 @@ yarn add -D auto-plugin-auto-bumper
             "path": "/path/to/resource",
 
             // True by default.
-            // Add `// $auto-bump` on the line that the version literal
+            // Add `// $auto-bumper` on the line that the version literal
             // is placed in.
             //
             // If false, auto-bumper will replace all instances of the

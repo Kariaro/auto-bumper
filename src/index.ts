@@ -1,14 +1,17 @@
 import { Auto, IPlugin, validatePluginConfiguration } from '@auto-it/core';
-// import MavenPlugin from '@auto-it/maven';
 import { parse } from 'pom-parser';
 import { inc, ReleaseType } from 'semver';
 import { promisify } from 'util';
 import * as t from 'io-ts';
 
-import escapeStringRegexp from 'escape-string-regexp';
+import { EOL } from 'os';
 import fs from 'fs';
-import readline from 'readline';
 
+// https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+const escapeStringRegexp = (str: string) => {
+  // $& means the whole matched string
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 /** Maven snapshot suffix */
 const snapshotSuffix = "-SNAPSHOT";
@@ -46,6 +49,18 @@ export interface IAutoBumperProperties {
   version?: string;
 };
 
+export interface IAutoBumperFile {
+  /**
+   * The line ending of the file
+   */
+  lineEnding: string,
+
+  /**
+   * The lines inside the file
+   */
+  lines: string[],
+}
+
 /** A version bumping plugin for auto */
 export default class AutoBumperPlugin implements IPlugin {
   /** The name of the plugin */
@@ -70,38 +85,62 @@ export default class AutoBumperPlugin implements IPlugin {
     };
   }
 
+
+  async readFile(path: string): Promise<IAutoBumperFile> {
+    const data = fs.readFileSync(path);
+    const lines = data.toString().split(/\r?\n/);
+
+    let idx_r = data.indexOf('\r');
+    if(idx_r < 0) {
+      return {
+        lineEnding: EOL,
+        lines: lines
+      };
+    }
+
+    let idx_n = data.indexOf('\n');
+    /** If the index of ('\r' + 1) == '\n' */
+    if(idx_r + 1 === idx_n) {
+      return {
+        lineEnding: '\r\n',
+        lines: lines
+      };
+    }
+
+    return {
+      lineEnding: '\r',
+      lines: lines
+    };
+  }
   /**
    * Bump literals with version information inside the specified file
    */
-  async bumpFile(path: string, old_version: string, next_version: string, safeMatching: boolean) {
-    console.log('File: "' + path + '", safeMatching=' + safeMatching);
-
-    const fileStream = fs.createReadStream(path);
-    const rl = readline.createInterface({
-      input: fileStream,
-      crlfDelay: Infinity
-    });
+  async bumpFile(auto: Auto, path: string, old_version: string, next_version: string, safeMatching: boolean) {
+    auto.logger.verbose.log('File: "' + path + '", safeMatching=' + safeMatching);
 
     const old_version_escaped = escapeStringRegexp(old_version);
-    const next_version_escaped = escapeStringRegexp(next_version);
     const replaceRegex = (str: string) => {
       return str
-        .replace(`"${old_version_escaped}"`, `"${next_version_escaped}"`)
-        .replace(`'${old_version_escaped}'`, `'${next_version_escaped}'`)
-        .replace(`\`${old_version_escaped}\``, `\`${next_version_escaped}\``);
+        .replace(new RegExp(`"${old_version_escaped}"`), `"${next_version}"`)
+        .replace(new RegExp(`'${old_version_escaped}'`), `'${next_version}'`)
+        .replace(new RegExp(`\`${old_version_escaped}\``), `\`${next_version}\``);
     };
+
+    const data = await this.readFile(path);
+    auto.logger.veryVerbose.log('  lines: "' + (data.lines.length) + '"');
+    auto.logger.veryVerbose.log('  lineEnding: "' + (data.lineEnding === '\r' ? '\\r':'\\r\\n') + '"');
 
     let modified = false;
     let content = [];
-    for await(const line of rl) {
+    for(const line of data.lines) {
       let replacedLine;
       if(safeMatching) {
         // Use a comment to make sure we have the correct literal
         // $auto-bumper
-        // TODO:
-
         if(/\/\/[ \t]*\$auto-bumper[ \t]*/.test(line)) {
           replacedLine = replaceRegex(line);
+        } else {
+          replacedLine = line;
         }
       } else {
         /** Escape all quote types */
@@ -109,16 +148,21 @@ export default class AutoBumperPlugin implements IPlugin {
       }
 
       if(replacedLine !== line) {
-        console.log(`Replaced line in file: ${replacedLine}`);
         modified = true;
       }
 
       content.push(replacedLine);
     }
 
+    auto.logger.veryVerbose.log('  modified: ' + modified);
     if(modified) {
-      console.log('Modifying file: "' + path + '"');
-
+      const joined_string = content.join(data.lineEnding);
+      auto.logger.veryVerbose.log('  source: ' + joined_string);
+      
+      fs.writeFile(path, joined_string, (err) => {
+        if(err) throw err;
+        auto.logger.log.log('Successfully modified: "' + path + "'");
+      });
     }
   }
 
@@ -155,7 +199,7 @@ export default class AutoBumperPlugin implements IPlugin {
           let safeMatching = element.safeMatching == undefined ? true:element.safeMatching;
 
           if(path) {
-            await this.bumpFile(path, currentVersion, releaseVersion, safeMatching);
+            await this.bumpFile(auto, path, currentVersion, releaseVersion, safeMatching);
           }
         }
       }

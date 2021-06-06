@@ -1176,14 +1176,9 @@
         "signature": "03d2e70c34640b553ed580286eb234835695ea1e473d837a4ced672648d453cd",
         "affectsGlobalScope": false
       },
-      "./node_modules/escape-string-regexp/index.d.ts": {
-        "version": "6049d315e1aa3f39a48f06cbccd77dbe2d85dc28e79638dd91adc37280c6d97e",
-        "signature": "6049d315e1aa3f39a48f06cbccd77dbe2d85dc28e79638dd91adc37280c6d97e",
-        "affectsGlobalScope": false
-      },
       "./src/index.ts": {
-        "version": "1deb8b9e2a4f12102ee9bef3d27d67662c0280282dfa8d919aee29115addcbc2",
-        "signature": "5081460120273924ab2f5d0fb082cac394c56e8acfed063ff8150b3dcd70cc41",
+        "version": "5e8c2e1e1c86837753935dd55881e59b7b05b805b00cd5bfa0ff32a8dc03e99f",
+        "signature": "9bec1e2c69ad27c0781f7857d377c47512b7d5d60e1db3050bf37cc4bae3b38e",
         "affectsGlobalScope": false
       },
       "../../typings/all-contributors.d.ts": {
@@ -4846,12 +4841,6 @@
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
         "../../node_modules/@types/yargs-parser/index.d.ts"
       ],
-      "./node_modules/escape-string-regexp/index.d.ts": [
-        "../../node_modules/@types/jsdom/base.d.ts",
-        "../../node_modules/@types/jsdom/index.d.ts",
-        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
-        "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
-      ],
       "./node_modules/tslib/tslib.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
@@ -4864,13 +4853,12 @@
         "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/readline.d.ts",
+        "../../node_modules/@types/node/os.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/semver/index.d.ts",
         "../../node_modules/io-ts/lib/index.d.ts",
         "../../packages/core/dist/auto.d.ts",
         "../../typings/node-pom-parser.d.ts",
-        "./node_modules/escape-string-regexp/index.d.ts",
         "./node_modules/tslib/tslib.d.ts"
       ],
       "../../typings/all-contributors.d.ts": [
@@ -7953,12 +7941,6 @@
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
         "../../node_modules/@types/yargs-parser/index.d.ts"
       ],
-      "./node_modules/escape-string-regexp/index.d.ts": [
-        "../../node_modules/@types/jsdom/base.d.ts",
-        "../../node_modules/@types/jsdom/index.d.ts",
-        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
-        "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
-      ],
       "./node_modules/tslib/tslib.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
@@ -8385,7 +8367,6 @@
       "../../packages/core/dist/utils/logger.d.ts",
       "../../packages/core/dist/validate-config.d.ts",
       "./node_modules/@types/yargs/index.d.ts",
-      "./node_modules/escape-string-regexp/index.d.ts",
       "./node_modules/tslib/tslib.d.ts",
       "./src/index.ts",
       "../../typings/all-contributors.d.ts",

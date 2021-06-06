@@ -10,10 +10,11 @@ declare const pluginOptions: t.PartialC<{
         path: t.StringC;
         /**
          * Default: `true`
-         * Use comments to specify the location of the version variable.
+         * If `true` will only replace literals on the same line as a comment
+         * `// $auto-bumper`
          *
-         * If `false` the auto bumper will update all literals in the file
-         * containing the current version.
+         * If `false` will update all literals in the file containing the current
+         * version.
          */
         safeMatching: t.BooleanC;
     }>>;
@@ -22,6 +23,16 @@ export declare type IAutoBumperPluginOptions = t.TypeOf<typeof pluginOptions>;
 export interface IAutoBumperProperties {
     /** Current version */
     version?: string;
+}
+export interface IAutoBumperFile {
+    /**
+     * The line ending of the file
+     */
+    lineEnding: string;
+    /**
+     * The lines inside the file
+     */
+    lines: string[];
 }
 /** A version bumping plugin for auto */
 export default class AutoBumperPlugin implements IPlugin {
@@ -34,10 +45,11 @@ export default class AutoBumperPlugin implements IPlugin {
     /** Initialize the plugin with it's options */
     constructor(options: IAutoBumperPluginOptions);
     getProperties(): Promise<IAutoBumperProperties>;
+    readFile(path: string): Promise<IAutoBumperFile>;
     /**
      * Bump literals with version information inside the specified file
      */
-    bumpFile(path: string, old_version: string, next_version: string, safeMatching: boolean): Promise<void>;
+    bumpFile(auto: Auto, path: string, old_version: string, next_version: string, safeMatching: boolean): Promise<void>;
     /** Tap into auto plugin points. */
     apply(auto: Auto): void;
     /** Get the version from the current pom.xml **/
