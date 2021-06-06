@@ -3,12 +3,6 @@
   "include": ["src/**/*", "../../typings/**/*"],
 
   "compilerOptions": {
-    "target": "esnext",
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "preserveConstEnums": true,
-    "moduleResolution": "node",
     "outDir": "./dist",
     "rootDir": "./src",
     "composite": true

@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/intuit/auto"
+    "url": "https://github.com/Kariaro/auto-bumper"
   },
   "files": [
     "dist"
@@ -36,9 +36,10 @@
   },
   "dependencies": {
     "@auto-it/core": "link:../../packages/core",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/preset-flow": "^7.13.13",
-    "@types/jest": "^26.0.23",
+    "jsdom": "^16.2.2",
+    "pom-parser": "^1.1.1",
+    "prettier": "^2.0.5",
+    "semver": "^7.0.0",
     "fp-ts": "^2.5.3",
     "io-ts": "^2.1.2",
     "jest": "^27.0.4",
@@ -46,6 +47,10 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-flow-strip-types": "^7.13.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.14.0"
+    "@babel/plugin-transform-modules-commonjs": "^7.14.0",
+    "@types/jest": "^26.0.7",
+    "@types/jsdom": "^16.2.3",
+    "@types/prettier": "^2.0.1",
+    "ts-jest": "^26.1.3"
   }
 }

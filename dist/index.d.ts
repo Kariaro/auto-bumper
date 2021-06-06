@@ -25,13 +25,9 @@ export interface IAutoBumperProperties {
     version?: string;
 }
 export interface IAutoBumperFile {
-    /**
-     * The line ending of the file
-     */
+    /** The line ending type */
     lineEnding: string;
-    /**
-     * The lines inside the file
-     */
+    /** The lines inside the file */
     lines: string[];
 }
 /** A version bumping plugin for auto */
@@ -44,16 +40,17 @@ export default class AutoBumperPlugin implements IPlugin {
     properties: IAutoBumperProperties;
     /** Initialize the plugin with it's options */
     constructor(options: IAutoBumperPluginOptions);
-    getProperties(): Promise<IAutoBumperProperties>;
-    readFile(path: string): Promise<IAutoBumperFile>;
+    private static getProperties;
+    private static readFile;
     /**
      * Bump literals with version information inside the specified file
      */
-    bumpFile(auto: Auto, path: string, old_version: string, next_version: string, safeMatching: boolean): Promise<void>;
+    private static bumpFile;
+    private snapshotRelease;
     /** Tap into auto plugin points. */
     apply(auto: Auto): void;
     /** Get the version from the current pom.xml **/
-    getVersion(auto: Auto): Promise<string>;
+    private getVersion;
 }
 export {};
 //# sourceMappingURL=index.d.ts.map

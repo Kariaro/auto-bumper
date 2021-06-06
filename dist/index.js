@@ -2,14 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPom = void 0;
 const tslib_1 = require("tslib");
-const core_1 = require("@auto-it/core");
+const core_1 = require("@auto-it/core"); // , IExtendedCommit
 const pom_parser_1 = require("pom-parser");
 const semver_1 = require("semver");
 const util_1 = require("util");
 const t = tslib_1.__importStar(require("io-ts"));
 const os_1 = require("os");
 const fs_1 = tslib_1.__importDefault(require("fs"));
-// https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
 const escapeStringRegexp = (str) => {
     // $& means the whole matched string
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -44,18 +43,20 @@ class AutoBumperPlugin {
     /** Initialize the plugin with it's options */
     constructor(options) {
         /** The name of the plugin */
-        this.name = 'auto-bumper';
+        this.name = 'auto-plugin-auto-bumper';
         /** Cached properties */
         this.properties = {};
+        this.snapshotRelease = false;
         this.options = options;
     }
-    async getProperties() {
+    static async getProperties() {
+        var _a;
         const pom = await exports.getPom();
         return {
-            version: pom.pomObject?.project.version
+            version: (_a = pom.pomObject) === null || _a === void 0 ? void 0 : _a.project.version
         };
     }
-    async readFile(path) {
+    static async readFile(path) {
         const data = fs_1.default.readFileSync(path);
         const lines = data.toString().split(/\r?\n/);
         let idx_r = data.indexOf('\r');
@@ -81,7 +82,11 @@ class AutoBumperPlugin {
     /**
      * Bump literals with version information inside the specified file
      */
-    async bumpFile(auto, path, old_version, next_version, safeMatching) {
+    static async bumpFile(auto, path, old_version, next_version, safeMatching) {
+        if (!fs_1.default.existsSync(path)) {
+            auto.logger.log.warn('The file: "' + path + '" does not exist!');
+            return;
+        }
         auto.logger.verbose.log('File: "' + path + '", safeMatching=' + safeMatching);
         const old_version_escaped = escapeStringRegexp(old_version);
         const replaceRegex = (str) => {
@@ -90,7 +95,7 @@ class AutoBumperPlugin {
                 .replace(new RegExp(`'${old_version_escaped}'`), `'${next_version}'`)
                 .replace(new RegExp(`\`${old_version_escaped}\``), `\`${next_version}\``);
         };
-        const data = await this.readFile(path);
+        const data = await AutoBumperPlugin.readFile(path);
         auto.logger.veryVerbose.log('  lines: "' + (data.lines.length) + '"');
         auto.logger.veryVerbose.log('  lineEnding: "' + (data.lineEnding === '\r' ? '\\r' : '\\r\\n') + '"');
         let modified = false;
@@ -130,39 +135,64 @@ class AutoBumperPlugin {
     /** Tap into auto plugin points. */
     apply(auto) {
         auto.hooks.beforeRun.tapPromise(this.name, async () => {
-            this.properties = await this.getProperties();
+            this.properties = await AutoBumperPlugin.getProperties();
+            const { version = "" } = this.properties;
+            if (version === null || version === void 0 ? void 0 : version.endsWith(snapshotSuffix)) {
+                this.snapshotRelease = true;
+            }
         });
+        /** Works */
         auto.hooks.validateConfig.tapPromise(this.name, async (name, options) => {
-            // If it's a string thats valid config
             if (name === this.name && typeof options !== "string") {
                 return core_1.validatePluginConfiguration(this.name, pluginOptions, options);
             }
         });
-        auto.hooks.version.tapPromise(this.name, async ({ bump }) => {
-            const currentVersion = this.properties.version;
-            if (!currentVersion) {
-                auto.logger.log.info('Error reading current version');
-                return;
-            }
-            const releaseVersion = semver_1.inc(currentVersion, bump);
-            auto.logger.log.log('Version-AUTO-BUMPER: current=' + currentVersion + ', release=' + releaseVersion);
+        /** Works */
+        auto.hooks.getPreviousVersion.tapPromise(this.name, async () => auto.prefixRelease(await this.getVersion(auto)));
+        auto.hooks.version.tapPromise(this.name, async ({ bump, dryRun, quiet }) => {
+            const previousVersion = await this.getVersion(auto);
+            const releaseVersion = semver_1.inc(previousVersion, bump);
+            console.log('VERSION AUTO BUMPER: version ======================================================');
+            auto.logger.log.log('Version-AUTO-BUMPER: previous=' + previousVersion + ', release=' + releaseVersion);
             if (releaseVersion) {
-                /** Update files specified in the files argument and bump version */
                 let files = this.options.files || [];
                 for (let i = 0; i < files.length; i++) {
                     let element = files[i];
                     let path = element.path;
                     let safeMatching = element.safeMatching == undefined ? true : element.safeMatching;
                     if (path) {
-                        await this.bumpFile(auto, path, currentVersion, releaseVersion, safeMatching);
+                        await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
                     }
                 }
+                await core_1.execPromise("git", ["commit", "-am", `"Release ${releaseVersion} [skip ci]"`, "--no-verify"]);
+                /*
+                const newVersion = auto.prefixRelease(releaseVersion);
+                console.log("New method apparently: " + newVersion);
+                await execPromise("git", [
+                  "tag",
+                  newVersion,
+                  "-m",
+                  `"Update version to ${newVersion}"`,
+                ]);
+                */
             }
+        });
+        auto.hooks.afterShipIt.tapPromise(this.name, async ({ dryRun }) => {
+            if (!this.snapshotRelease || dryRun) {
+                return;
+            }
+            await core_1.execPromise("git", [
+                "push",
+                "--follow-tags",
+                "--set-upstream",
+                auto.remote,
+                auto.baseBranch,
+            ]);
         });
     }
     /** Get the version from the current pom.xml **/
     async getVersion(auto) {
-        this.properties = await this.getProperties();
+        this.properties = await AutoBumperPlugin.getProperties();
         const { version } = this.properties;
         if (version) {
             auto.logger.verbose.info(`Found version in pom.xml: ${version}`);

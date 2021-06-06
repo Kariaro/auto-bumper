@@ -1177,8 +1177,8 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "ca1ff236fbf54fdba6253858e50ec299c0b915fe86db1323ac9d71cb4e5ac0f5",
-        "signature": "9bec1e2c69ad27c0781f7857d377c47512b7d5d60e1db3050bf37cc4bae3b38e",
+        "version": "37c0229fda40013187cb6fc44b11323c137710448877814fa9d523b03192926a",
+        "signature": "aa5191879cdd39bd680e05ea6e221b620561abad7afedcc88ee243fe85a0306e",
         "affectsGlobalScope": false
       },
       "../../typings/all-contributors.d.ts": {
@@ -1811,7 +1811,7 @@
       "sourceMap": true,
       "declaration": true,
       "declarationMap": true,
-      "target": 99,
+      "target": 4,
       "importHelpers": true,
       "strict": true,
       "downlevelIteration": true,
@@ -1820,9 +1820,6 @@
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "noUnusedLocals": true,
-      "allowJs": true,
-      "preserveConstEnums": true,
-      "moduleResolution": 2,
       "outDir": "./dist",
       "rootDir": "./src",
       "composite": true,
