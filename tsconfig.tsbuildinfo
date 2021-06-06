@@ -141,9 +141,9 @@
         "signature": "506b80b9951c9381dc5f11897b31fca5e2a65731d96ddefa19687fbc26b23c6e",
         "affectsGlobalScope": true
       },
-      "../../node_modules/tslib/tslib.d.ts": {
-        "version": "55d7868222288a4054166fecbfbaeee46dd3b1b58e4a118e40e9c8c13a9fbe84",
-        "signature": "55d7868222288a4054166fecbfbaeee46dd3b1b58e4a118e40e9c8c13a9fbe84",
+      "./node_modules/tslib/tslib.d.ts": {
+        "version": "4984b48a97160eac5282ffeae690315420a626de83ccf6045c36d934c5c957c0",
+        "signature": "4984b48a97160eac5282ffeae690315420a626de83ccf6045c36d934c5c957c0",
         "affectsGlobalScope": false
       },
       "../../node_modules/before-after-hook/index.d.ts": {
@@ -977,8 +977,8 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "8f6ca74ec553a8257c2d9934fc04088238a21556d89d6432b0ee4f7bdb0456f1",
-        "signature": "0dec087a9e274d8c6399167ba832f2ea3e4ba05ae2ea9ffd46267377039172e6",
+        "version": "74876135de8f3d7f27f0d59fcd122d0266c0897520154cf1a0431dd8e500c16c",
+        "signature": "39743f4cf4bfbef825a027efbaf3ecb3cc2115d9035c4dccfd5ec5f4fcd5c6fb",
         "affectsGlobalScope": false
       },
       "../../typings/all-contributors.d.ts": {
@@ -1034,6 +1034,16 @@
       "../../typings/tweet-tweet.d.ts": {
         "version": "c01c0220661e0ccd1ad9ac09f2796a87f8c160c496316ccdbb34820f3f80e159",
         "signature": "c01c0220661e0ccd1ad9ac09f2796a87f8c160c496316ccdbb34820f3f80e159",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/yargs-parser/index.d.ts": {
+        "version": "3bdd93ec24853e61bfa4c63ebaa425ff3e474156e87a47d90122e1d8cc717c1f",
+        "signature": "3bdd93ec24853e61bfa4c63ebaa425ff3e474156e87a47d90122e1d8cc717c1f",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/yargs/index.d.ts": {
+        "version": "1db6491f25ced62f23f06d1f3700a790df0971726acb33669bbf4a8de2f769a9",
+        "signature": "1db6491f25ced62f23f06d1f3700a790df0971726acb33669bbf4a8de2f769a9",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/anymatch/index.d.ts": {
@@ -1786,16 +1796,6 @@
         "signature": "99c7f3bbc03f6eb3e663c26c104d639617620c2925e76fc284f7bedf1877fa2b",
         "affectsGlobalScope": false
       },
-      "../../node_modules/@types/yargs-parser/index.d.ts": {
-        "version": "3bdd93ec24853e61bfa4c63ebaa425ff3e474156e87a47d90122e1d8cc717c1f",
-        "signature": "3bdd93ec24853e61bfa4c63ebaa425ff3e474156e87a47d90122e1d8cc717c1f",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/yargs/index.d.ts": {
-        "version": "5a2a25feca554a8f289ed62114771b8c63d89f2b58325e2f8b7043e4e0160d11",
-        "signature": "5a2a25feca554a8f289ed62114771b8c63d89f2b58325e2f8b7043e4e0160d11",
-        "affectsGlobalScope": false
-      },
       "../../node_modules/@types/yauzl/index.d.ts": {
         "version": "3845d3b64286c12c60d39fc90ac1cc5e47cbc951530658d2567d578b2faa1f26",
         "signature": "3845d3b64286c12c60d39fc90ac1cc5e47cbc951530658d2567d578b2faa1f26",
@@ -1811,7 +1811,7 @@
       "sourceMap": true,
       "declaration": true,
       "declarationMap": true,
-      "target": 4,
+      "target": 99,
       "importHelpers": true,
       "strict": true,
       "downlevelIteration": true,
@@ -1820,10 +1820,11 @@
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "noUnusedLocals": true,
+      "allowJs": true,
+      "moduleResolution": 2,
       "outDir": "./dist",
       "rootDir": "./src",
       "composite": true,
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -3851,13 +3852,6 @@
         "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
       ],
-      "../../node_modules/@types/yargs/index.d.ts": [
-        "../../node_modules/@types/jsdom/base.d.ts",
-        "../../node_modules/@types/jsdom/index.d.ts",
-        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
-        "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
-        "../../node_modules/@types/yargs-parser/index.d.ts"
-      ],
       "../../node_modules/@types/yauzl/index.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
@@ -4513,12 +4507,6 @@
         "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
       ],
-      "../../node_modules/tslib/tslib.d.ts": [
-        "../../node_modules/@types/jsdom/base.d.ts",
-        "../../node_modules/@types/jsdom/index.d.ts",
-        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
-        "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
-      ],
       "../../node_modules/typescript/lib/lib.dom.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
@@ -4845,14 +4833,29 @@
         "../../node_modules/tapable/tapable.d.ts",
         "../../packages/core/dist/types.d.ts"
       ],
+      "./node_modules/@types/yargs/index.d.ts": [
+        "../../node_modules/@types/jsdom/base.d.ts",
+        "../../node_modules/@types/jsdom/index.d.ts",
+        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
+        "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
+        "../../node_modules/@types/yargs-parser/index.d.ts"
+      ],
+      "./node_modules/tslib/tslib.d.ts": [
+        "../../node_modules/@types/jsdom/base.d.ts",
+        "../../node_modules/@types/jsdom/index.d.ts",
+        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
+        "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
+      ],
       "./src/index.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
         "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/io-ts/lib/index.d.ts",
-        "../../node_modules/tslib/tslib.d.ts",
-        "../../packages/core/dist/auto.d.ts"
+        "../../packages/core/dist/auto.d.ts",
+        "../../typings/node-pom-parser.d.ts",
+        "./node_modules/tslib/tslib.d.ts"
       ],
       "../../typings/all-contributors.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
@@ -6946,13 +6949,6 @@
         "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
       ],
-      "../../node_modules/@types/yargs/index.d.ts": [
-        "../../node_modules/@types/jsdom/base.d.ts",
-        "../../node_modules/@types/jsdom/index.d.ts",
-        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
-        "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
-        "../../node_modules/@types/yargs-parser/index.d.ts"
-      ],
       "../../node_modules/@types/yauzl/index.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
@@ -7608,12 +7604,6 @@
         "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
       ],
-      "../../node_modules/tslib/tslib.d.ts": [
-        "../../node_modules/@types/jsdom/base.d.ts",
-        "../../node_modules/@types/jsdom/index.d.ts",
-        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
-        "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
-      ],
       "../../node_modules/typescript/lib/lib.dom.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
@@ -7940,9 +7930,23 @@
         "../../node_modules/tapable/tapable.d.ts",
         "../../packages/core/dist/types.d.ts"
       ],
+      "./node_modules/@types/yargs/index.d.ts": [
+        "../../node_modules/@types/jsdom/base.d.ts",
+        "../../node_modules/@types/jsdom/index.d.ts",
+        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
+        "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
+        "../../node_modules/@types/yargs-parser/index.d.ts"
+      ],
+      "./node_modules/tslib/tslib.d.ts": [
+        "../../node_modules/@types/jsdom/base.d.ts",
+        "../../node_modules/@types/jsdom/index.d.ts",
+        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
+        "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
+      ],
       "./src/index.ts": [
         "../../node_modules/io-ts/lib/index.d.ts",
-        "../../packages/core/dist/auto.d.ts"
+        "../../packages/core/dist/auto.d.ts",
+        "../../typings/node-pom-parser.d.ts"
       ],
       "../../typings/all-contributors.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
@@ -8245,7 +8249,6 @@
       "../../node_modules/@types/webpack/index.d.ts",
       "../../node_modules/@types/webpack/node_modules/@types/tapable/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
-      "../../node_modules/@types/yargs/index.d.ts",
       "../../node_modules/@types/yauzl/index.d.ts",
       "../../node_modules/anymatch/index.d.ts",
       "../../node_modules/before-after-hook/index.d.ts",
@@ -8314,7 +8317,6 @@
       "../../node_modules/safe-buffer/index.d.ts",
       "../../node_modules/source-map/source-map.d.ts",
       "../../node_modules/tapable/tapable.d.ts",
-      "../../node_modules/tslib/tslib.d.ts",
       "../../node_modules/typescript/lib/lib.dom.d.ts",
       "../../node_modules/typescript/lib/lib.es2015.collection.d.ts",
       "../../node_modules/typescript/lib/lib.es2015.core.d.ts",
@@ -8360,6 +8362,8 @@
       "../../packages/core/dist/utils/load-plugins.d.ts",
       "../../packages/core/dist/utils/logger.d.ts",
       "../../packages/core/dist/validate-config.d.ts",
+      "./node_modules/@types/yargs/index.d.ts",
+      "./node_modules/tslib/tslib.d.ts",
       "./src/index.ts",
       "../../typings/all-contributors.d.ts",
       "../../typings/dot-properties.d.ts",

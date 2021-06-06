@@ -36,8 +36,16 @@
   },
   "dependencies": {
     "@auto-it/core": "link:../../packages/core",
+    "@auto-it/maven": "^10.29.2",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-flow": "^7.13.13",
+    "@types/jest": "^26.0.23",
     "fp-ts": "^2.5.3",
     "io-ts": "^2.1.2",
+    "jest": "^27.0.4",
     "tslib": "1.10.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-flow-strip-types": "^7.13.0"
   }
 }
