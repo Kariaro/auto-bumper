@@ -7,9 +7,9 @@ A version bumping plugin for auto
 This plugin is not included with the `auto` CLI installed via NPM. To install:
 
 ```bash
-npm i --save-dev @auto-it/auto-bumper
+npm i --save-dev auto-plugin-auto-bumper
 # or
-yarn add -D @auto-it/auto-bumper
+yarn add -D auto-plugin-auto-bumper
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ yarn add -D @auto-it/auto-bumper
 {
   "plugins": [
     [
-      "auto-bumper",
+      "auto-plugin-auto-bumper",
       {
         "files": [
           {
