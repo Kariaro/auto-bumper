@@ -2,6 +2,9 @@
 
 A version bumping plugin for auto
 
+This plugin only modifies versions inside strings like these:
+`"string"`, `'string'`, `` `string` ``
+
 ## Installation
 
 This plugin is not included with the `auto` CLI installed via NPM. To install:
@@ -14,6 +17,13 @@ yarn add -D auto-plugin-auto-bumper
 
 ## Usage
 
+`safeMatching`: Default `true`
+
+If this field is `true` then only lines that ends with `// $auto-bumper` will be changed.
+
+If `false` all strings matching the version will be replaced in the specified files.
+
+
 ```json
 {
   "plugins": [
@@ -23,13 +33,6 @@ yarn add -D auto-plugin-auto-bumper
         "files": [
           {
             "path": "/path/to/resource",
-
-            // True by default.
-            // Add `// $auto-bumper` on the line that the version literal
-            // is placed in.
-            //
-            // If false, auto-bumper will replace all instances of the
-            // previous version with the new version inside the file.
             "safeMatching": false
           },
           {
