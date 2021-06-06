@@ -976,9 +976,214 @@
         "signature": "abdc45cffdd84b0be83ca82fefc54ee5201e5c149e6f68ae5ea9f5e078af6281",
         "affectsGlobalScope": false
       },
+      "../../node_modules/@types/semver/classes/semver.d.ts": {
+        "version": "d9e55d93aa33fad61bd5c63800972d00ba8879ec5d29f6f3bce67d16d86abc33",
+        "signature": "d9e55d93aa33fad61bd5c63800972d00ba8879ec5d29f6f3bce67d16d86abc33",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/parse.d.ts": {
+        "version": "2ac9c8332c5f8510b8bdd571f8271e0f39b0577714d5e95c1e79a12b2616f069",
+        "signature": "2ac9c8332c5f8510b8bdd571f8271e0f39b0577714d5e95c1e79a12b2616f069",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/valid.d.ts": {
+        "version": "42c21aa963e7b86fa00801d96e88b36803188018d5ad91db2a9101bccd40b3ff",
+        "signature": "42c21aa963e7b86fa00801d96e88b36803188018d5ad91db2a9101bccd40b3ff",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/clean.d.ts": {
+        "version": "d31eb848cdebb4c55b4893b335a7c0cca95ad66dee13cbb7d0893810c0a9c301",
+        "signature": "d31eb848cdebb4c55b4893b335a7c0cca95ad66dee13cbb7d0893810c0a9c301",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/inc.d.ts": {
+        "version": "77c1d91a129ba60b8c405f9f539e42df834afb174fe0785f89d92a2c7c16b77a",
+        "signature": "77c1d91a129ba60b8c405f9f539e42df834afb174fe0785f89d92a2c7c16b77a",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/diff.d.ts": {
+        "version": "c544d81603149987796b24cca297c965db427b84b2580fb27e52fb37ddc1f470",
+        "signature": "c544d81603149987796b24cca297c965db427b84b2580fb27e52fb37ddc1f470",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/major.d.ts": {
+        "version": "906c751ef5822ec0dadcea2f0e9db64a33fb4ee926cc9f7efa38afe5d5371b2a",
+        "signature": "906c751ef5822ec0dadcea2f0e9db64a33fb4ee926cc9f7efa38afe5d5371b2a",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/minor.d.ts": {
+        "version": "5387c049e9702f2d2d7ece1a74836a14b47fbebe9bbeb19f94c580a37c855351",
+        "signature": "5387c049e9702f2d2d7ece1a74836a14b47fbebe9bbeb19f94c580a37c855351",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/patch.d.ts": {
+        "version": "c68391fb9efad5d99ff332c65b1606248c4e4a9f1dd9a087204242b56c7126d6",
+        "signature": "c68391fb9efad5d99ff332c65b1606248c4e4a9f1dd9a087204242b56c7126d6",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/prerelease.d.ts": {
+        "version": "e9cf02252d3a0ced987d24845dcb1f11c1be5541f17e5daa44c6de2d18138d0c",
+        "signature": "e9cf02252d3a0ced987d24845dcb1f11c1be5541f17e5daa44c6de2d18138d0c",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/compare.d.ts": {
+        "version": "e8b02b879754d85f48489294f99147aeccc352c760d95a6fe2b6e49cd400b2fe",
+        "signature": "e8b02b879754d85f48489294f99147aeccc352c760d95a6fe2b6e49cd400b2fe",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/rcompare.d.ts": {
+        "version": "9f6908ab3d8a86c68b86e38578afc7095114e66b2fc36a2a96e9252aac3998e0",
+        "signature": "9f6908ab3d8a86c68b86e38578afc7095114e66b2fc36a2a96e9252aac3998e0",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/compare-loose.d.ts": {
+        "version": "0eedb2344442b143ddcd788f87096961cd8572b64f10b4afc3356aa0460171c6",
+        "signature": "0eedb2344442b143ddcd788f87096961cd8572b64f10b4afc3356aa0460171c6",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/compare-build.d.ts": {
+        "version": "9eb2875a1e4c583066af7d6194ea8162191b2756e5d87ccb3c562fdf74d06869",
+        "signature": "9eb2875a1e4c583066af7d6194ea8162191b2756e5d87ccb3c562fdf74d06869",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/sort.d.ts": {
+        "version": "c68baff4d8ba346130e9753cefe2e487a16731bf17e05fdacc81e8c9a26aae9d",
+        "signature": "c68baff4d8ba346130e9753cefe2e487a16731bf17e05fdacc81e8c9a26aae9d",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/rsort.d.ts": {
+        "version": "2cd15528d8bb5d0453aa339b4b52e0696e8b07e790c153831c642c3dea5ac8af",
+        "signature": "2cd15528d8bb5d0453aa339b4b52e0696e8b07e790c153831c642c3dea5ac8af",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/gt.d.ts": {
+        "version": "479d622e66283ffa9883fbc33e441f7fc928b2277ff30aacbec7b7761b4e9579",
+        "signature": "479d622e66283ffa9883fbc33e441f7fc928b2277ff30aacbec7b7761b4e9579",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/lt.d.ts": {
+        "version": "ade307876dc5ca267ca308d09e737b611505e015c535863f22420a11fffc1c54",
+        "signature": "ade307876dc5ca267ca308d09e737b611505e015c535863f22420a11fffc1c54",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/eq.d.ts": {
+        "version": "f8cdefa3e0dee639eccbe9794b46f90291e5fd3989fcba60d2f08fde56179fb9",
+        "signature": "f8cdefa3e0dee639eccbe9794b46f90291e5fd3989fcba60d2f08fde56179fb9",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/neq.d.ts": {
+        "version": "86c5a62f99aac7053976e317dbe9acb2eaf903aaf3d2e5bb1cafe5c2df7b37a8",
+        "signature": "86c5a62f99aac7053976e317dbe9acb2eaf903aaf3d2e5bb1cafe5c2df7b37a8",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/gte.d.ts": {
+        "version": "2b300954ce01a8343866f737656e13243e86e5baef51bd0631b21dcef1f6e954",
+        "signature": "2b300954ce01a8343866f737656e13243e86e5baef51bd0631b21dcef1f6e954",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/lte.d.ts": {
+        "version": "a2d409a9ffd872d6b9d78ead00baa116bbc73cfa959fce9a2f29d3227876b2a1",
+        "signature": "a2d409a9ffd872d6b9d78ead00baa116bbc73cfa959fce9a2f29d3227876b2a1",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/cmp.d.ts": {
+        "version": "b288936f560cd71f4a6002953290de9ff8dfbfbf37f5a9391be5c83322324898",
+        "signature": "b288936f560cd71f4a6002953290de9ff8dfbfbf37f5a9391be5c83322324898",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/coerce.d.ts": {
+        "version": "61178a781ef82e0ff54f9430397e71e8f365fc1e3725e0e5346f2de7b0d50dfa",
+        "signature": "61178a781ef82e0ff54f9430397e71e8f365fc1e3725e0e5346f2de7b0d50dfa",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/classes/comparator.d.ts": {
+        "version": "5349dc09f88a35d52dc0bf24c44ebfd10dcb13e052d79133a56e1ac127162a4d",
+        "signature": "5349dc09f88a35d52dc0bf24c44ebfd10dcb13e052d79133a56e1ac127162a4d",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/classes/range.d.ts": {
+        "version": "6eef5113135a0f2bbac8259909a5bbb7666bcde022c28f4ab95145623cbe1f72",
+        "signature": "6eef5113135a0f2bbac8259909a5bbb7666bcde022c28f4ab95145623cbe1f72",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/functions/satisfies.d.ts": {
+        "version": "058b8dd97b7c67b6bf33e7bda7b1e247b019b675d4b6449d14ac002091a8b4f8",
+        "signature": "058b8dd97b7c67b6bf33e7bda7b1e247b019b675d4b6449d14ac002091a8b4f8",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/max-satisfying.d.ts": {
+        "version": "89c8a7b88c378663a8124664f2d9b8c2887e186b55aa066edf6d67177ca1aa04",
+        "signature": "89c8a7b88c378663a8124664f2d9b8c2887e186b55aa066edf6d67177ca1aa04",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/min-satisfying.d.ts": {
+        "version": "5a30ba65ad753eb2ef65355dbb3011b28b192cb9df2ef0b5f595b51ca7faf353",
+        "signature": "5a30ba65ad753eb2ef65355dbb3011b28b192cb9df2ef0b5f595b51ca7faf353",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/to-comparators.d.ts": {
+        "version": "5192f9a6469f849e0863616b668fde54bcd6704394b4bfbd115691865f66d761",
+        "signature": "5192f9a6469f849e0863616b668fde54bcd6704394b4bfbd115691865f66d761",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/min-version.d.ts": {
+        "version": "f41d30972724714763a2698ae949fbc463afb203b5fa7c4ad7e4de0871129a17",
+        "signature": "f41d30972724714763a2698ae949fbc463afb203b5fa7c4ad7e4de0871129a17",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/valid.d.ts": {
+        "version": "0123340327efb174818f4b78bf6a9b12f8470754e6afac9e4d32a2ad27521f7b",
+        "signature": "0123340327efb174818f4b78bf6a9b12f8470754e6afac9e4d32a2ad27521f7b",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/outside.d.ts": {
+        "version": "9795e0a3a45d5b6f1a791ee54b7c8b58bc931e8900966cea2dff9c5bae56073b",
+        "signature": "9795e0a3a45d5b6f1a791ee54b7c8b58bc931e8900966cea2dff9c5bae56073b",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/gtr.d.ts": {
+        "version": "5890be29879d02424b7654f40592915189034948f7a18c5ad121c006d4e92811",
+        "signature": "5890be29879d02424b7654f40592915189034948f7a18c5ad121c006d4e92811",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/ltr.d.ts": {
+        "version": "0ab49086f10c75a1cb3b18bffe799dae021774146d8a2d5a4bb42dda67b64f9b",
+        "signature": "0ab49086f10c75a1cb3b18bffe799dae021774146d8a2d5a4bb42dda67b64f9b",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/intersects.d.ts": {
+        "version": "81c77839e152b8f715ec67b0a8b910bcc2d6cf916794c3519f8798c40efd12ac",
+        "signature": "81c77839e152b8f715ec67b0a8b910bcc2d6cf916794c3519f8798c40efd12ac",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/simplify.d.ts": {
+        "version": "a868a534ba1c2ca9060b8a13b0ffbbbf78b4be7b0ff80d8c75b02773f7192c29",
+        "signature": "a868a534ba1c2ca9060b8a13b0ffbbbf78b4be7b0ff80d8c75b02773f7192c29",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/ranges/subset.d.ts": {
+        "version": "464843c00fb3dd4735b28255c5c9fe713f16b8e47a3db09ba1647687440f7aef",
+        "signature": "464843c00fb3dd4735b28255c5c9fe713f16b8e47a3db09ba1647687440f7aef",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/internals/identifiers.d.ts": {
+        "version": "34baf65cfee92f110d6653322e2120c2d368ee64b3c7981dff08ed105c4f19b0",
+        "signature": "34baf65cfee92f110d6653322e2120c2d368ee64b3c7981dff08ed105c4f19b0",
+        "affectsGlobalScope": false
+      },
+      "../../node_modules/@types/semver/index.d.ts": {
+        "version": "03d2e70c34640b553ed580286eb234835695ea1e473d837a4ced672648d453cd",
+        "signature": "03d2e70c34640b553ed580286eb234835695ea1e473d837a4ced672648d453cd",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/escape-string-regexp/index.d.ts": {
+        "version": "6049d315e1aa3f39a48f06cbccd77dbe2d85dc28e79638dd91adc37280c6d97e",
+        "signature": "6049d315e1aa3f39a48f06cbccd77dbe2d85dc28e79638dd91adc37280c6d97e",
+        "affectsGlobalScope": false
+      },
       "./src/index.ts": {
-        "version": "74876135de8f3d7f27f0d59fcd122d0266c0897520154cf1a0431dd8e500c16c",
-        "signature": "39743f4cf4bfbef825a027efbaf3ecb3cc2115d9035c4dccfd5ec5f4fcd5c6fb",
+        "version": "1deb8b9e2a4f12102ee9bef3d27d67662c0280282dfa8d919aee29115addcbc2",
+        "signature": "5081460120273924ab2f5d0fb082cac394c56e8acfed063ff8150b3dcd70cc41",
         "affectsGlobalScope": false
       },
       "../../typings/all-contributors.d.ts": {
@@ -1466,206 +1671,6 @@
         "signature": "8a19491eba2108d5c333c249699f40aff05ad312c04a17504573b27d91f0aede",
         "affectsGlobalScope": false
       },
-      "../../node_modules/@types/semver/classes/semver.d.ts": {
-        "version": "d9e55d93aa33fad61bd5c63800972d00ba8879ec5d29f6f3bce67d16d86abc33",
-        "signature": "d9e55d93aa33fad61bd5c63800972d00ba8879ec5d29f6f3bce67d16d86abc33",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/parse.d.ts": {
-        "version": "2ac9c8332c5f8510b8bdd571f8271e0f39b0577714d5e95c1e79a12b2616f069",
-        "signature": "2ac9c8332c5f8510b8bdd571f8271e0f39b0577714d5e95c1e79a12b2616f069",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/valid.d.ts": {
-        "version": "42c21aa963e7b86fa00801d96e88b36803188018d5ad91db2a9101bccd40b3ff",
-        "signature": "42c21aa963e7b86fa00801d96e88b36803188018d5ad91db2a9101bccd40b3ff",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/clean.d.ts": {
-        "version": "d31eb848cdebb4c55b4893b335a7c0cca95ad66dee13cbb7d0893810c0a9c301",
-        "signature": "d31eb848cdebb4c55b4893b335a7c0cca95ad66dee13cbb7d0893810c0a9c301",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/inc.d.ts": {
-        "version": "77c1d91a129ba60b8c405f9f539e42df834afb174fe0785f89d92a2c7c16b77a",
-        "signature": "77c1d91a129ba60b8c405f9f539e42df834afb174fe0785f89d92a2c7c16b77a",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/diff.d.ts": {
-        "version": "c544d81603149987796b24cca297c965db427b84b2580fb27e52fb37ddc1f470",
-        "signature": "c544d81603149987796b24cca297c965db427b84b2580fb27e52fb37ddc1f470",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/major.d.ts": {
-        "version": "906c751ef5822ec0dadcea2f0e9db64a33fb4ee926cc9f7efa38afe5d5371b2a",
-        "signature": "906c751ef5822ec0dadcea2f0e9db64a33fb4ee926cc9f7efa38afe5d5371b2a",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/minor.d.ts": {
-        "version": "5387c049e9702f2d2d7ece1a74836a14b47fbebe9bbeb19f94c580a37c855351",
-        "signature": "5387c049e9702f2d2d7ece1a74836a14b47fbebe9bbeb19f94c580a37c855351",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/patch.d.ts": {
-        "version": "c68391fb9efad5d99ff332c65b1606248c4e4a9f1dd9a087204242b56c7126d6",
-        "signature": "c68391fb9efad5d99ff332c65b1606248c4e4a9f1dd9a087204242b56c7126d6",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/prerelease.d.ts": {
-        "version": "e9cf02252d3a0ced987d24845dcb1f11c1be5541f17e5daa44c6de2d18138d0c",
-        "signature": "e9cf02252d3a0ced987d24845dcb1f11c1be5541f17e5daa44c6de2d18138d0c",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/compare.d.ts": {
-        "version": "e8b02b879754d85f48489294f99147aeccc352c760d95a6fe2b6e49cd400b2fe",
-        "signature": "e8b02b879754d85f48489294f99147aeccc352c760d95a6fe2b6e49cd400b2fe",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/rcompare.d.ts": {
-        "version": "9f6908ab3d8a86c68b86e38578afc7095114e66b2fc36a2a96e9252aac3998e0",
-        "signature": "9f6908ab3d8a86c68b86e38578afc7095114e66b2fc36a2a96e9252aac3998e0",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/compare-loose.d.ts": {
-        "version": "0eedb2344442b143ddcd788f87096961cd8572b64f10b4afc3356aa0460171c6",
-        "signature": "0eedb2344442b143ddcd788f87096961cd8572b64f10b4afc3356aa0460171c6",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/compare-build.d.ts": {
-        "version": "9eb2875a1e4c583066af7d6194ea8162191b2756e5d87ccb3c562fdf74d06869",
-        "signature": "9eb2875a1e4c583066af7d6194ea8162191b2756e5d87ccb3c562fdf74d06869",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/sort.d.ts": {
-        "version": "c68baff4d8ba346130e9753cefe2e487a16731bf17e05fdacc81e8c9a26aae9d",
-        "signature": "c68baff4d8ba346130e9753cefe2e487a16731bf17e05fdacc81e8c9a26aae9d",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/rsort.d.ts": {
-        "version": "2cd15528d8bb5d0453aa339b4b52e0696e8b07e790c153831c642c3dea5ac8af",
-        "signature": "2cd15528d8bb5d0453aa339b4b52e0696e8b07e790c153831c642c3dea5ac8af",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/gt.d.ts": {
-        "version": "479d622e66283ffa9883fbc33e441f7fc928b2277ff30aacbec7b7761b4e9579",
-        "signature": "479d622e66283ffa9883fbc33e441f7fc928b2277ff30aacbec7b7761b4e9579",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/lt.d.ts": {
-        "version": "ade307876dc5ca267ca308d09e737b611505e015c535863f22420a11fffc1c54",
-        "signature": "ade307876dc5ca267ca308d09e737b611505e015c535863f22420a11fffc1c54",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/eq.d.ts": {
-        "version": "f8cdefa3e0dee639eccbe9794b46f90291e5fd3989fcba60d2f08fde56179fb9",
-        "signature": "f8cdefa3e0dee639eccbe9794b46f90291e5fd3989fcba60d2f08fde56179fb9",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/neq.d.ts": {
-        "version": "86c5a62f99aac7053976e317dbe9acb2eaf903aaf3d2e5bb1cafe5c2df7b37a8",
-        "signature": "86c5a62f99aac7053976e317dbe9acb2eaf903aaf3d2e5bb1cafe5c2df7b37a8",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/gte.d.ts": {
-        "version": "2b300954ce01a8343866f737656e13243e86e5baef51bd0631b21dcef1f6e954",
-        "signature": "2b300954ce01a8343866f737656e13243e86e5baef51bd0631b21dcef1f6e954",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/lte.d.ts": {
-        "version": "a2d409a9ffd872d6b9d78ead00baa116bbc73cfa959fce9a2f29d3227876b2a1",
-        "signature": "a2d409a9ffd872d6b9d78ead00baa116bbc73cfa959fce9a2f29d3227876b2a1",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/cmp.d.ts": {
-        "version": "b288936f560cd71f4a6002953290de9ff8dfbfbf37f5a9391be5c83322324898",
-        "signature": "b288936f560cd71f4a6002953290de9ff8dfbfbf37f5a9391be5c83322324898",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/coerce.d.ts": {
-        "version": "61178a781ef82e0ff54f9430397e71e8f365fc1e3725e0e5346f2de7b0d50dfa",
-        "signature": "61178a781ef82e0ff54f9430397e71e8f365fc1e3725e0e5346f2de7b0d50dfa",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/classes/comparator.d.ts": {
-        "version": "5349dc09f88a35d52dc0bf24c44ebfd10dcb13e052d79133a56e1ac127162a4d",
-        "signature": "5349dc09f88a35d52dc0bf24c44ebfd10dcb13e052d79133a56e1ac127162a4d",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/classes/range.d.ts": {
-        "version": "6eef5113135a0f2bbac8259909a5bbb7666bcde022c28f4ab95145623cbe1f72",
-        "signature": "6eef5113135a0f2bbac8259909a5bbb7666bcde022c28f4ab95145623cbe1f72",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/functions/satisfies.d.ts": {
-        "version": "058b8dd97b7c67b6bf33e7bda7b1e247b019b675d4b6449d14ac002091a8b4f8",
-        "signature": "058b8dd97b7c67b6bf33e7bda7b1e247b019b675d4b6449d14ac002091a8b4f8",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/max-satisfying.d.ts": {
-        "version": "89c8a7b88c378663a8124664f2d9b8c2887e186b55aa066edf6d67177ca1aa04",
-        "signature": "89c8a7b88c378663a8124664f2d9b8c2887e186b55aa066edf6d67177ca1aa04",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/min-satisfying.d.ts": {
-        "version": "5a30ba65ad753eb2ef65355dbb3011b28b192cb9df2ef0b5f595b51ca7faf353",
-        "signature": "5a30ba65ad753eb2ef65355dbb3011b28b192cb9df2ef0b5f595b51ca7faf353",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/to-comparators.d.ts": {
-        "version": "5192f9a6469f849e0863616b668fde54bcd6704394b4bfbd115691865f66d761",
-        "signature": "5192f9a6469f849e0863616b668fde54bcd6704394b4bfbd115691865f66d761",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/min-version.d.ts": {
-        "version": "f41d30972724714763a2698ae949fbc463afb203b5fa7c4ad7e4de0871129a17",
-        "signature": "f41d30972724714763a2698ae949fbc463afb203b5fa7c4ad7e4de0871129a17",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/valid.d.ts": {
-        "version": "0123340327efb174818f4b78bf6a9b12f8470754e6afac9e4d32a2ad27521f7b",
-        "signature": "0123340327efb174818f4b78bf6a9b12f8470754e6afac9e4d32a2ad27521f7b",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/outside.d.ts": {
-        "version": "9795e0a3a45d5b6f1a791ee54b7c8b58bc931e8900966cea2dff9c5bae56073b",
-        "signature": "9795e0a3a45d5b6f1a791ee54b7c8b58bc931e8900966cea2dff9c5bae56073b",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/gtr.d.ts": {
-        "version": "5890be29879d02424b7654f40592915189034948f7a18c5ad121c006d4e92811",
-        "signature": "5890be29879d02424b7654f40592915189034948f7a18c5ad121c006d4e92811",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/ltr.d.ts": {
-        "version": "0ab49086f10c75a1cb3b18bffe799dae021774146d8a2d5a4bb42dda67b64f9b",
-        "signature": "0ab49086f10c75a1cb3b18bffe799dae021774146d8a2d5a4bb42dda67b64f9b",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/intersects.d.ts": {
-        "version": "81c77839e152b8f715ec67b0a8b910bcc2d6cf916794c3519f8798c40efd12ac",
-        "signature": "81c77839e152b8f715ec67b0a8b910bcc2d6cf916794c3519f8798c40efd12ac",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/simplify.d.ts": {
-        "version": "a868a534ba1c2ca9060b8a13b0ffbbbf78b4be7b0ff80d8c75b02773f7192c29",
-        "signature": "a868a534ba1c2ca9060b8a13b0ffbbbf78b4be7b0ff80d8c75b02773f7192c29",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/ranges/subset.d.ts": {
-        "version": "464843c00fb3dd4735b28255c5c9fe713f16b8e47a3db09ba1647687440f7aef",
-        "signature": "464843c00fb3dd4735b28255c5c9fe713f16b8e47a3db09ba1647687440f7aef",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/internals/identifiers.d.ts": {
-        "version": "34baf65cfee92f110d6653322e2120c2d368ee64b3c7981dff08ed105c4f19b0",
-        "signature": "34baf65cfee92f110d6653322e2120c2d368ee64b3c7981dff08ed105c4f19b0",
-        "affectsGlobalScope": false
-      },
-      "../../node_modules/@types/semver/index.d.ts": {
-        "version": "03d2e70c34640b553ed580286eb234835695ea1e473d837a4ced672648d453cd",
-        "signature": "03d2e70c34640b553ed580286eb234835695ea1e473d837a4ced672648d453cd",
-        "affectsGlobalScope": false
-      },
       "../../node_modules/@types/source-list-map/index.d.ts": {
         "version": "67fc055eb86a0632e2e072838f889ffe1754083cb13c8c80a06a7d895d877aae",
         "signature": "67fc055eb86a0632e2e072838f889ffe1754083cb13c8c80a06a7d895d877aae",
@@ -1821,6 +1826,7 @@
       "experimentalDecorators": true,
       "noUnusedLocals": true,
       "allowJs": true,
+      "preserveConstEnums": true,
       "moduleResolution": 2,
       "outDir": "./dist",
       "rootDir": "./src",
@@ -4840,6 +4846,12 @@
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
         "../../node_modules/@types/yargs-parser/index.d.ts"
       ],
+      "./node_modules/escape-string-regexp/index.d.ts": [
+        "../../node_modules/@types/jsdom/base.d.ts",
+        "../../node_modules/@types/jsdom/index.d.ts",
+        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
+        "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
+      ],
       "./node_modules/tslib/tslib.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
@@ -4851,10 +4863,14 @@
         "../../node_modules/@types/jsdom/index.d.ts",
         "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/readline.d.ts",
         "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/semver/index.d.ts",
         "../../node_modules/io-ts/lib/index.d.ts",
         "../../packages/core/dist/auto.d.ts",
         "../../typings/node-pom-parser.d.ts",
+        "./node_modules/escape-string-regexp/index.d.ts",
         "./node_modules/tslib/tslib.d.ts"
       ],
       "../../typings/all-contributors.d.ts": [
@@ -7937,6 +7953,12 @@
         "../../node_modules/@types/jsdom/ts4.0/index.d.ts",
         "../../node_modules/@types/yargs-parser/index.d.ts"
       ],
+      "./node_modules/escape-string-regexp/index.d.ts": [
+        "../../node_modules/@types/jsdom/base.d.ts",
+        "../../node_modules/@types/jsdom/index.d.ts",
+        "../../node_modules/@types/jsdom/ts3.5/index.d.ts",
+        "../../node_modules/@types/jsdom/ts4.0/index.d.ts"
+      ],
       "./node_modules/tslib/tslib.d.ts": [
         "../../node_modules/@types/jsdom/base.d.ts",
         "../../node_modules/@types/jsdom/index.d.ts",
@@ -8363,6 +8385,7 @@
       "../../packages/core/dist/utils/logger.d.ts",
       "../../packages/core/dist/validate-config.d.ts",
       "./node_modules/@types/yargs/index.d.ts",
+      "./node_modules/escape-string-regexp/index.d.ts",
       "./node_modules/tslib/tslib.d.ts",
       "./src/index.ts",
       "../../typings/all-contributors.d.ts",

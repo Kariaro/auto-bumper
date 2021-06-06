@@ -23,8 +23,14 @@ yarn add -D auto-plugin-auto-bumper
         "files": [
           {
             "path": "/path/to/resource",
-            "unsafeReplace": true,
-            "guidedReplace": false
+
+            // True by default.
+            // Add `// $auto-bump` on the line that the version literal
+            // is placed in.
+            //
+            // If false, auto-bumper will replace all instances of the
+            // previous version with the new version inside the file.
+            "safeMatching": false
           },
           {
             "path": "/another/resource"
