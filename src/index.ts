@@ -110,10 +110,10 @@ export default class AutoBumperPlugin implements IPlugin {
   /**
    * Bump literals with version information inside the specified file
    */
-  private static async bumpFile(auto: Auto, path: string, old_version: string, next_version: string, safeMatching: boolean) {
+  private static async bumpFile(auto: Auto, path: string, old_version: string, next_version: string, safeMatching: boolean): Promise<boolean> {
     if(!fs.existsSync(path)) {
       auto.logger.log.warn('The file: "' + path + '" does not exist!');
-      return;
+      return false;
     }
 
     auto.logger.verbose.log('File: "' + path + '", safeMatching=' + safeMatching);
@@ -164,6 +164,8 @@ export default class AutoBumperPlugin implements IPlugin {
         auto.logger.log.log('Successfully modified: "' + path + "'");
       });
     }
+
+    return modified;
   }
 
   private snapshotRelease: boolean = false;
@@ -192,7 +194,10 @@ export default class AutoBumperPlugin implements IPlugin {
 
     auto.hooks.version.tapPromise(this.name, async ({ bump, dryRun, quiet }) => {
       const previousVersion = await this.getVersion(auto);
-      const releaseVersion = inc(previousVersion, bump as ReleaseType);
+      const releaseVersion = //inc(previousVersion, bump as ReleaseType);
+        this.snapshotRelease && bump === "patch"
+          ? previousVersion
+          : inc(previousVersion, bump as ReleaseType);
       
       console.log('VERSION AUTO BUMPER: version ======================================================');
       auto.logger.log.log('Version-AUTO-BUMPER: previous=' + previousVersion + ', release=' + releaseVersion);
@@ -200,42 +205,22 @@ export default class AutoBumperPlugin implements IPlugin {
       if(releaseVersion) {
         let files = this.options.files || [];
 
+        let modifications = false;
         for(let i = 0; i < files.length; i++) {
           let element = files[i];
           let path = element.path;
           let safeMatching = element.safeMatching == undefined ? true:element.safeMatching;
   
           if(path) {
-            await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
+            let result = await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
+            modifications = modifications || result;
           }
         }
 
-        await execPromise("git", ["commit", "-am", `"Release ${releaseVersion} [skip ci]"`, "--no-verify"]);
-        /*
-        const newVersion = auto.prefixRelease(releaseVersion);
-        console.log("New method apparently: " + newVersion);
-        await execPromise("git", [
-          "tag",
-          newVersion,
-          "-m",
-          `"Update version to ${newVersion}"`,
-        ]);
-        */
+        if(modifications) {
+          await execPromise("git", ["commit", "-am", `"Update $auto-bumper ${releaseVersion} [skip ci]"`, "--no-verify"]);
+        }
       }
-    });
-
-    auto.hooks.afterShipIt.tapPromise(this.name, async ({ dryRun }) => {
-      if(!this.snapshotRelease || dryRun) {
-        return;
-      }
-
-      await execPromise("git", [
-        "push",
-        "--follow-tags",
-        "--set-upstream",
-        auto.remote,
-        auto.baseBranch,
-      ]);
     });
   }
 
