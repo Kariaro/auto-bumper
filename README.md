@@ -1,9 +1,11 @@
 # Auto-Bumper Plugin
 
-A version bumping plugin for auto
+A version bumping plugin for auto.
 
 This plugin only modifies versions inside strings like these:
 `"string"`, `'string'`, `` `string` ``
+
+**Important:** This plugin is dependant on `@auto-it/maven` and needs to be placed before `maven` inside the plugins list.
 
 ## Installation
 
