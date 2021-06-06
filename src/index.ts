@@ -204,15 +204,6 @@ export default class AutoBumperPlugin implements IPlugin {
         }
       }
     });
-
-    /*
-    auto.hooks.afterShipIt.tapPromise(this.name, async ({ dryRun }) => {
-      // Update files
-      for(let element in this.options.files) {
-        console.log(element);
-      }
-    });
-    */
   }
 
   /** Get the version from the current pom.xml **/
