@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "description": "Version bumper plugin for auto",
+  "author": {
+    "name": "HardCoded"
+  },
+  "dependencies": {
+    "@auto-it/core": "^10.29.2",
+    "pom-parser": "^1.2.0"
+  }
+}
