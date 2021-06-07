@@ -24,14 +24,14 @@ const parsePom = util_1.promisify(pom_parser_1.parse);
 const getPom = async (filePath = "pom.xml") => parsePom({ filePath: filePath });
 exports.getPom = getPom;
 const fileOptions = t.partial({
-    /** The relative path of the file */
+    /** The path of the file */
     path: t.string,
     /**
      * If this field is `true` then you need to add comments
      * to the lines that should be changed.
      *
-     * To replace the same line use: `// $auto-bumper`.
-     * To replace the next line use: `// $auto-bumper-line`.
+     * To replace the same line use: `// $auto-bumper`
+     * To replace the next line use: `// $auto-bumper-line`
      *
      * If `false`, all strings matching the version will
      * be replaced.
@@ -46,7 +46,7 @@ const fileOptions = t.partial({
     scripted: t.boolean
 });
 const pluginOptions = t.partial({
-    /** File that should be updated */
+    /** A list of files that should be updated */
     files: t.array(fileOptions)
 });
 ;
@@ -165,10 +165,6 @@ class AutoBumperPlugin {
                     let bump = bumpFiles[i];
                     if (!bump || (bump.path !== path) || !bump.task)
                         continue;
-                    let task = bump.task;
-                    console.log('READING BUMP:');
-                    console.log(bump);
-                    console.log(task);
                     const changed = bump.task(data, '' + previousVersion, '' + releaseVersion);
                     let modified = (changed !== data);
                     auto.logger.veryVerbose.log('  modified: ' + modified);
@@ -179,18 +175,44 @@ class AutoBumperPlugin {
                                 throw err;
                             auto.logger.log.log('Successfully modified: "' + path + "'");
                         });
-                        return true;
                     }
-                    return false;
+                    return modified;
                 }
             }
         }
         catch (error) {
-            /** Debug, ignore error */
             auto.logger.verbose.error(error);
             throw error;
         }
         return false;
+    }
+    /**
+     * Load `.autobumper.js`
+     */
+    static async loadScriptModule(auto, files) {
+        try {
+            /**
+             * TODO: Find an official way to do this
+             *
+             * Using a relative path with `./../../` could fail if the "node_modules"
+             * path is not inside the root of the project.
+             */
+            return await Promise.resolve().then(() => tslib_1.__importStar(require(`${process.cwd()}/${scriptedBumperFile}`)));
+        }
+        catch (error) {
+            /**
+             * If the file is not found we check if the file
+             * is needed. If the file is needed we generate an
+             * error.
+             */
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].scripted) {
+                    auto.logger.log.error(`Could not find "${scriptedBumperFile}" in root of project!`);
+                    throw error;
+                }
+            }
+        }
+        return undefined;
     }
     /** Tap into auto plugin points. */
     apply(auto) {
@@ -217,28 +239,7 @@ class AutoBumperPlugin {
             if (releaseVersion) {
                 let files = this.options.files || [];
                 let modifications = false;
-                let scripted_module;
-                try {
-                    /**
-                     * Sometimes the "node_modules" path is not inside the root of the project.
-                     * Therefore, I feel this is a safer alternative.
-                     */
-                    scripted_module = await Promise.resolve().then(() => tslib_1.__importStar(require(`${process.cwd()}/${scriptedBumperFile}`)));
-                }
-                catch (error) {
-                    /**
-                     * If the file is not found we check if the file
-                     * is needed. If the file is needed we generate an
-                     * error.
-                     */
-                    for (let i = 0; i < files.length; i++) {
-                        if (files[i].scripted) {
-                            auto.logger.log.error(`Could not find "${scriptedBumperFile}" in root of project!`);
-                            throw error;
-                        }
-                    }
-                    scripted_module = undefined;
-                }
+                let scripted_module = await AutoBumperPlugin.loadScriptModule(auto, files);
                 for (let i = 0; i < files.length; i++) {
                     let element = files[i];
                     let path = element.path;

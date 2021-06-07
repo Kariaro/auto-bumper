@@ -69,7 +69,7 @@ const tracker = {
   path: '/path/to/resource',
   task: (contents, previousVersion, releaseVersion) => {
     return contents.replace(
-      new RegExp(`@since v${previousVersion}-SNAPSHOT`),
+      new RegExp(`@since v${previousVersion}-SNAPSHOT`, 'g'),
       `@since v${releaseVersion}-SNAPSHOT`
     );
   }
