@@ -218,7 +218,7 @@ export default class AutoBumperPlugin implements IPlugin {
         }
 
         if(modifications) {
-          await execPromise("git", ["commit", "-am", `"Update $auto-bumper ${releaseVersion} [skip ci]"`, "--no-verify"]);
+          await execPromise("git", ["commit", "-am", `"Update @auto-bumper ${releaseVersion} [skip ci]"`, "--no-verify"]);
         }
       }
     });
