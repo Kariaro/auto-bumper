@@ -1,6 +1,5 @@
-import { jest } from '@jest/globals';
-import Auto from '@auto-it/core';
-import AutoBumper from '../src';
+const Auto = require('@auto-it/core');
+const AutoBumper = require('../dist');
 
 describe('Auto-Bumper Plugin', () => {
   test('should do something', async () => {

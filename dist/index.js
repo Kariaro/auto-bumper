@@ -171,35 +171,10 @@ class AutoBumperPlugin {
                     }
                 }
                 if (modifications) {
-                    await core_1.execPromise("git", ["commit", "-am", `"Update file versions ${releaseVersion} [skip ci]"`, "--no-verify"]);
+                    await core_1.execPromise("git", ["commit", "-am", `"Update $auto-bumper ${releaseVersion} [skip ci]"`, "--no-verify"]);
                 }
             }
         });
-        /*
-        auto.hooks.publish.tapPromise(this.name, async () => {
-          await execPromise("git", [
-            "push",
-            "--follow-tags",
-            "--set-upstream",
-            auto.remote,
-            auto.baseBranch,
-          ]);
-        });
-    
-        auto.hooks.afterShipIt.tapPromise(this.name, async ({ dryRun }) => {
-          if(!this.snapshotRelease || dryRun) {
-            return;
-          }
-    
-          await execPromise("git", [
-            "push",
-            "--follow-tags",
-            "--set-upstream",
-            auto.remote,
-            auto.baseBranch,
-          ]);
-        });
-        */
     }
     /** Get the version from the current pom.xml **/
     async getVersion(auto) {
