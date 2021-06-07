@@ -7,6 +7,7 @@ import * as t from 'io-ts';
 import { EOL } from 'os';
 import fs from 'fs';
 
+/** Regex esxape a string */
 const escapeStringRegexp = (str: string) => {
   // $& means the whole matched string
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -15,40 +16,40 @@ const escapeStringRegexp = (str: string) => {
 /** Maven snapshot suffix */
 const snapshotSuffix = "-SNAPSHOT";
 
+/** Scripted bumper file */
+const scriptedBumperFile = "./.autobumper.js";
+
 /** Parse the pom.xml file **/
 const parsePom = promisify(parse);
 
 /** Get the maven pom.xml for a project **/
 export const getPom = async (filePath = "pom.xml") => parsePom({ filePath: filePath });
 
-const regexOptions = t.partial({
-  /** Matching regex */
-  regex: t.string,
 
-  /** Value to replace with */
-  value: t.string
-});
 
 const fileOptions = t.partial({
 	/** The relative path of the file */
 	path: t.string,
 
   /**
-   * Default: `true`
-   * If `true` will only replace literals on the same line as a comment
-   * `// $auto-bumper`
+   * If this field is `true` then you need to add comments
+   * to the lines that should be changed.
    * 
-   * If `false` will update all literals in the file containing the current
-   * version.
+   * To replace the same line use: `// $auto-bumper`.
+   * To replace the next line use: `// $auto-bumper-line`.
+   * 
+   * If `false`, all strings matching the version will
+   * be replaced.
    */
    safeMatching: t.boolean,
 
    /**
-    * Only available when `safeMathching` is `true`.
+    * Default: `false`
     * 
-    * Specifies strings that should be replaced in a file.
+    * When this field is `true` it will override `safeMatching`
+    * and all replacements will be routed through `.autobumper.js`.
     */
-   regexReplace: t.array(regexOptions)
+    scripted: t.boolean
 });
 
 const pluginOptions = t.partial({
@@ -98,6 +99,7 @@ export default class AutoBumperPlugin implements IPlugin {
     };
   }
 
+  /** Read a file and return the content of that file */
   private static async readFile(path: string): Promise<IAutoBumperFile> {
     const data = fs.readFileSync(path);
     const lines = data.toString().split(/\r?\n/);
@@ -111,24 +113,17 @@ export default class AutoBumperPlugin implements IPlugin {
     }
 
     let idx_n = data.indexOf('\n');
-    /** If the index of ('\r' + 1) == '\n' */
-    if(idx_r + 1 === idx_n) {
-      return {
-        lineEnding: '\r\n',
-        lines: lines
-      };
-    }
-
     return {
-      lineEnding: '\r',
+      /** If the index of ('\r' + 1) == '\n' */
+      lineEnding: (idx_r + 1 === idx_n) ? '\r\n':'\r',
       lines: lines
     };
   }
 
   /**
-   * Bump literals with version information inside the specified file
+   * Bump version information inside a file
    */
-  private static async bumpFile(auto: Auto, path: string, previousVersion: string, releaseVersion: string, safeMatching: boolean, regexReplace?: typeof regexOptions): Promise<boolean> {
+  private static async bumpFile(auto: Auto, path: string, previousVersion: string, releaseVersion: string, safeMatching: boolean): Promise<boolean> {
     if(!fs.existsSync(path)) {
       auto.logger.log.warn('The file: "' + path + '" does not exist!');
       return false;
@@ -155,7 +150,7 @@ export default class AutoBumperPlugin implements IPlugin {
       let replacedLine;
       if(safeMatching) {
         if(/\/\/[ \t]*\$auto-bumper-line[ \t]*/.test(line)) {
-          // Check next line for changes
+          /* Check the next line for changes. */
           check_next_line = true;
           replacedLine = line;
         } else if(check_next_line) {
@@ -182,12 +177,6 @@ export default class AutoBumperPlugin implements IPlugin {
     if(modified) {
       const joined_string = content.join(data.lineEnding);
       auto.logger.veryVerbose.log('  source: ' + joined_string);
-      
-      if(regexReplace) {
-        // REPLACE the regex strings in the file
-        console.log("Should replace regex:");
-        console.log(regexReplace);
-      }
 
       fs.writeFile(path, joined_string, (err) => {
         if(err) throw err;
@@ -196,6 +185,14 @@ export default class AutoBumperPlugin implements IPlugin {
     }
 
     return modified;
+  }
+
+  /**
+   * Bump verison using a script
+   */
+  private static async bumpFileWithScript(auto: Auto, path: string, previousVersion: string, releaseVersion: string): Promise<boolean> {
+
+    return false;
   }
   
   /** Tap into auto plugin points. */
@@ -208,14 +205,12 @@ export default class AutoBumperPlugin implements IPlugin {
       }
     });
 
-    /** Works */
     auto.hooks.validateConfig.tapPromise(this.name, async (name, options) => {
       if(name === this.name && typeof options !== "string") {
         return validatePluginConfiguration(this.name, pluginOptions, options);
       }
     });
 
-    /** Works */
     auto.hooks.getPreviousVersion.tapPromise(this.name, async () =>
       auto.prefixRelease(await this.getVersion(auto))
     );
@@ -231,16 +226,29 @@ export default class AutoBumperPlugin implements IPlugin {
 
       if(releaseVersion) {
         let files = this.options.files || [];
-
         let modifications = false;
+        let scripted_module;
+
+        try {
+          scripted_module = await import(scriptedBumperFile);
+        } catch(error) {
+          throw error;
+        }
+
+        console.log(scripted_module);
+
         for(let i = 0; i < files.length; i++) {
           let element = files[i];
           let path = element.path;
-          let safeMatching = element.safeMatching == undefined ? true:element.safeMatching;
-  
           if(path) {
-            let result = await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
-            modifications = modifications || result;
+            if(element.scripted) {
+              let result = await AutoBumperPlugin.bumpFileWithScript(auto, path, previousVersion, releaseVersion);
+              modifications = modifications || result;
+            } else {
+              let safeMatching = element.safeMatching == undefined ? true:element.safeMatching;
+              let result = await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
+              modifications = modifications || result;
+            }
           }
         }
 

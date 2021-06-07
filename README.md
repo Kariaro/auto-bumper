@@ -31,31 +31,23 @@ yarn add -D auto-plugin-auto-bumper
 
             /** (Optional) Default: true
              *
-             * If this field is true then you need to add comments to
-             * the lines that will be changed.
+             * If this field is true then you need to add comments
+             * to the lines that should be changed.
              * 
              * To replace the same line use: // $auto-bumper
              * To replace the next line use: // $auto-bumper-line
              *
-             * Otherwise all strings matching the version will be
-             * replaced in the specified file.
+             * If false, all strings matching the version will
+             * be replaced.
              */
             "safeMatching": false,
 
-            /** (Experimental) (Optional)
+            /** (Experimental) (Optional) Default: false
              * 
-             * This field can only be used when "safeMatching" is true.
-             * This stage will run after the versions has been replaced.
-             * 
-             * You have access to two variables ${previousVersion} and
-             * ${releaseVersion}. You can include these in your regex string.
+             * When this field is true it will override "safeMatching"
+             * and all replacements will be routed through ".autobumper.js".
              */
-            "regexReplace": [
-              {
-                "regex": "@since ${previousVersion}-SNAPSHOT",
-                "value": "@since ${releaseVersion}-SNAPSHOT"
-              }
-            ]
+            "scripted": true
           },
           {
             "path": "/another/resource"
@@ -66,4 +58,24 @@ yarn add -D auto-plugin-auto-bumper
     // other plugins
   ]
 }
+```
+
+## Scriptable
+
+Example of how to configure `.autobumper.js`.
+
+```js
+const tracker = {
+  path: '/path/to/resource',
+  task: (contents, previousVersion, releaseVersion) => {
+    return contents.replace(
+      new RegExp(`@since v${previousVersion}-SNAPSHOT`),
+      `@since v${releaseVersion}-SNAPSHOT`
+    );
+  }
+};
+
+module.exports = {
+  bumpFiles: [ tracker ]
+};
 ```

@@ -9,25 +9,23 @@ declare const pluginOptions: t.PartialC<{
         /** The relative path of the file */
         path: t.StringC;
         /**
-         * Default: `true`
-         * If `true` will only replace literals on the same line as a comment
-         * `// $auto-bumper`
+         * If this field is `true` then you need to add comments
+         * to the lines that should be changed.
          *
-         * If `false` will update all literals in the file containing the current
-         * version.
+         * To replace the same line use: `// $auto-bumper`.
+         * To replace the next line use: `// $auto-bumper-line`.
+         *
+         * If `false`, all strings matching the version will
+         * be replaced.
          */
         safeMatching: t.BooleanC;
         /**
-         * Only available when `safeMathching` is `true`.
+         * Default: `false`
          *
-         * Specifies strings that should be replaced in a file.
+         * When this field is `true` it will override `safeMatching`
+         * and all replacements will be routed through `.autobumper.js`.
          */
-        regexReplace: t.ArrayC<t.PartialC<{
-            /** Matching regex */
-            regex: t.StringC;
-            /** Value to replace with */
-            value: t.StringC;
-        }>>;
+        scripted: t.BooleanC;
     }>>;
 }>;
 export declare type IAutoBumperPluginOptions = t.TypeOf<typeof pluginOptions>;
@@ -54,11 +52,16 @@ export default class AutoBumperPlugin implements IPlugin {
     /** Initialize the plugin with it's options */
     constructor(options: IAutoBumperPluginOptions);
     private static getProperties;
+    /** Read a file and return the content of that file */
     private static readFile;
     /**
-     * Bump literals with version information inside the specified file
+     * Bump version information inside a file
      */
     private static bumpFile;
+    /**
+     * Bump verison using a script
+     */
+    private static bumpFileWithScript;
     /** Tap into auto plugin points. */
     apply(auto: Auto): void;
     /** Get the version from the current pom.xml **/
