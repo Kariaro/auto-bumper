@@ -4,16 +4,14 @@
   "main": "dist/index.js",
   "description": "A version bumping plugin for auto",
   "license": "MIT",
-  "author": {
-    "name": "HardCoded"
-  },
+  "author": "HardCoded",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kariaro/auto-bumper"
+    "url": "git+https://github.com/Kariaro/auto-bumper.git"
   },
   "files": [
     "dist"
@@ -54,5 +52,9 @@
     "jest": "^27.0.4",
     "ts-jest": "^26.1.3",
     "typescript": "^4.3.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/Kariaro/auto-bumper/issues"
+  },
+  "homepage": "https://github.com/Kariaro/auto-bumper#readme"
 }
