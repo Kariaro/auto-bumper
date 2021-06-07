@@ -171,7 +171,7 @@ class AutoBumperPlugin {
                     }
                 }
                 if (modifications) {
-                    await core_1.execPromise("git", ["commit", "-am", `"Update $auto-bumper ${releaseVersion} [skip ci]"`, "--no-verify"]);
+                    await core_1.execPromise("git", ["commit", "-am", `"Update @auto-bumper ${releaseVersion} [skip ci]"`, "--no-verify"]);
                 }
             }
         });
