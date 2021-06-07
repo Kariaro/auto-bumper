@@ -17,7 +17,7 @@ const escapeStringRegexp = (str) => {
 /** Maven snapshot suffix */
 const snapshotSuffix = "-SNAPSHOT";
 /** Scripted bumper file */
-const scriptedBumperFile = "./.autobumper.js";
+const scriptedBumperFile = ".autobumper.js";
 /** Parse the pom.xml file **/
 const parsePom = util_1.promisify(pom_parser_1.parse);
 /** Get the maven pom.xml for a project **/
@@ -152,7 +152,44 @@ class AutoBumperPlugin {
     /**
      * Bump verison using a script
      */
-    static async bumpFileWithScript(auto, path, previousVersion, releaseVersion) {
+    static async bumpFileWithScript(auto, script, path, previousVersion, releaseVersion) {
+        if (!fs_1.default.existsSync(path)) {
+            auto.logger.log.warn('The file: "' + path + '" does not exist!');
+            return false;
+        }
+        try {
+            const data = fs_1.default.readFileSync(path).toString();
+            let bumpFiles = script.bumpFiles;
+            if (bumpFiles) {
+                for (let i in bumpFiles) {
+                    let bump = bumpFiles[i];
+                    if (!bump || (bump.path !== path) || !bump.task)
+                        continue;
+                    let task = bump.task;
+                    console.log('READING BUMP:');
+                    console.log(bump);
+                    console.log(task);
+                    const changed = bump.task(data, '' + previousVersion, '' + releaseVersion);
+                    let modified = (changed !== data);
+                    auto.logger.veryVerbose.log('  modified: ' + modified);
+                    if (modified) {
+                        auto.logger.veryVerbose.log('  source: ' + changed);
+                        fs_1.default.writeFile(path, changed, (err) => {
+                            if (err)
+                                throw err;
+                            auto.logger.log.log('Successfully modified: "' + path + "'");
+                        });
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+        catch (error) {
+            /** Debug, ignore error */
+            auto.logger.verbose.error(error);
+            throw error;
+        }
         return false;
     }
     /** Tap into auto plugin points. */
@@ -182,18 +219,32 @@ class AutoBumperPlugin {
                 let modifications = false;
                 let scripted_module;
                 try {
-                    scripted_module = await Promise.resolve().then(() => tslib_1.__importStar(require(scriptedBumperFile)));
+                    /**
+                     * Sometimes the "node_modules" path is not inside the root of the project.
+                     * Therefore, I feel this is a safer alternative.
+                     */
+                    scripted_module = await Promise.resolve().then(() => tslib_1.__importStar(require(`${process.cwd()}/${scriptedBumperFile}`)));
                 }
                 catch (error) {
-                    throw error;
+                    /**
+                     * If the file is not found we check if the file
+                     * is needed. If the file is needed we generate an
+                     * error.
+                     */
+                    for (let i = 0; i < files.length; i++) {
+                        if (files[i].scripted) {
+                            auto.logger.log.error(`Could not find "${scriptedBumperFile}" in root of project!`);
+                            throw error;
+                        }
+                    }
+                    scripted_module = undefined;
                 }
-                console.log(scripted_module);
                 for (let i = 0; i < files.length; i++) {
                     let element = files[i];
                     let path = element.path;
                     if (path) {
                         if (element.scripted) {
-                            let result = await AutoBumperPlugin.bumpFileWithScript(auto, path, previousVersion, releaseVersion);
+                            let result = await AutoBumperPlugin.bumpFileWithScript(auto, scripted_module, path, previousVersion, releaseVersion);
                             modifications = modifications || result;
                         }
                         else {

@@ -17,15 +17,13 @@ const escapeStringRegexp = (str: string) => {
 const snapshotSuffix = "-SNAPSHOT";
 
 /** Scripted bumper file */
-const scriptedBumperFile = "./.autobumper.js";
+const scriptedBumperFile = ".autobumper.js";
 
 /** Parse the pom.xml file **/
 const parsePom = promisify(parse);
 
 /** Get the maven pom.xml for a project **/
 export const getPom = async (filePath = "pom.xml") => parsePom({ filePath: filePath });
-
-
 
 const fileOptions = t.partial({
 	/** The relative path of the file */
@@ -190,7 +188,49 @@ export default class AutoBumperPlugin implements IPlugin {
   /**
    * Bump verison using a script
    */
-  private static async bumpFileWithScript(auto: Auto, path: string, previousVersion: string, releaseVersion: string): Promise<boolean> {
+  private static async bumpFileWithScript(auto: Auto, script: any, path: string, previousVersion: string, releaseVersion: string): Promise<boolean> {
+    if(!fs.existsSync(path)) {
+      auto.logger.log.warn('The file: "' + path + '" does not exist!');
+      return false;
+    }
+
+    try {
+      const data = fs.readFileSync(path).toString();
+
+      let bumpFiles = script.bumpFiles;
+      if(bumpFiles) {
+        for(let i in bumpFiles) {
+          let bump = bumpFiles[i];
+          if(!bump || (bump.path !== path) || !bump.task) continue;
+
+          let task = bump.task;
+          console.log('READING BUMP:');
+          console.log(bump);
+          console.log(task);
+
+          const changed = bump.task(data, ''+previousVersion, ''+releaseVersion)
+          let modified = (changed !== data);
+
+          auto.logger.veryVerbose.log('  modified: ' + modified);
+          if(modified) {
+            auto.logger.veryVerbose.log('  source: ' + changed);
+
+            fs.writeFile(path, changed, (err) => {
+              if(err) throw err;
+              auto.logger.log.log('Successfully modified: "' + path + "'");
+            });
+            
+            return true;
+          }
+
+          return false;
+        }
+      }
+    } catch(error) {
+      /** Debug, ignore error */
+      auto.logger.verbose.error(error);
+      throw error;
+    }
 
     return false;
   }
@@ -230,19 +270,33 @@ export default class AutoBumperPlugin implements IPlugin {
         let scripted_module;
 
         try {
-          scripted_module = await import(scriptedBumperFile);
+          /**
+           * Sometimes the "node_modules" path is not inside the root of the project.
+           * Therefore, I feel this is a safer alternative.
+           */
+          scripted_module = await import(`${process.cwd()}/${scriptedBumperFile}`);
         } catch(error) {
-          throw error;
-        }
+          /**
+           * If the file is not found we check if the file
+           * is needed. If the file is needed we generate an
+           * error.
+           */
+          for(let i = 0; i < files.length; i++) {
+            if(files[i].scripted) {
+              auto.logger.log.error(`Could not find "${scriptedBumperFile}" in root of project!`);
+              throw error;
+            }
+          }
 
-        console.log(scripted_module);
+          scripted_module = undefined;
+        }
 
         for(let i = 0; i < files.length; i++) {
           let element = files[i];
           let path = element.path;
           if(path) {
             if(element.scripted) {
-              let result = await AutoBumperPlugin.bumpFileWithScript(auto, path, previousVersion, releaseVersion);
+              let result = await AutoBumperPlugin.bumpFileWithScript(auto, scripted_module, path, previousVersion, releaseVersion);
               modifications = modifications || result;
             } else {
               let safeMatching = element.safeMatching == undefined ? true:element.safeMatching;
