@@ -20,6 +20,12 @@ const parsePom = util_1.promisify(pom_parser_1.parse);
 /** Get the maven pom.xml for a project **/
 const getPom = async (filePath = "pom.xml") => parsePom({ filePath: filePath });
 exports.getPom = getPom;
+const regexOptions = t.partial({
+    /** Matching regex */
+    regex: t.string,
+    /** Value to replace with */
+    value: t.string
+});
 const fileOptions = t.partial({
     /** The relative path of the file */
     path: t.string,
@@ -31,7 +37,13 @@ const fileOptions = t.partial({
      * If `false` will update all literals in the file containing the current
      * version.
      */
-    safeMatching: t.boolean
+    safeMatching: t.boolean,
+    /**
+     * Only available when `safeMathching` is `true`.
+     *
+     * Specifies strings that should be replaced in a file.
+     */
+    regexReplace: t.array(regexOptions)
 });
 const pluginOptions = t.partial({
     /** File that should be updated */
@@ -46,6 +58,7 @@ class AutoBumperPlugin {
         this.name = 'auto-plugin-auto-bumper';
         /** Cached properties */
         this.properties = {};
+        /** If this is a snapshot release */
         this.snapshotRelease = false;
         this.options = options;
     }
@@ -82,30 +95,38 @@ class AutoBumperPlugin {
     /**
      * Bump literals with version information inside the specified file
      */
-    static async bumpFile(auto, path, old_version, next_version, safeMatching) {
+    static async bumpFile(auto, path, previousVersion, releaseVersion, safeMatching, regexReplace) {
         if (!fs_1.default.existsSync(path)) {
             auto.logger.log.warn('The file: "' + path + '" does not exist!');
             return false;
         }
         auto.logger.verbose.log('File: "' + path + '", safeMatching=' + safeMatching);
-        const old_version_escaped = escapeStringRegexp(old_version);
+        const previousVersion_escaped = escapeStringRegexp(previousVersion);
         const replaceRegex = (str) => {
             return str
-                .replace(new RegExp(`"${old_version_escaped}"`), `"${next_version}"`)
-                .replace(new RegExp(`'${old_version_escaped}'`), `'${next_version}'`)
-                .replace(new RegExp(`\`${old_version_escaped}\``), `\`${next_version}\``);
+                .replace(new RegExp(`"${previousVersion_escaped}"`), `"${releaseVersion}"`)
+                .replace(new RegExp(`'${previousVersion_escaped}'`), `'${releaseVersion}'`)
+                .replace(new RegExp(`\`${previousVersion_escaped}\``), `\`${releaseVersion}\``);
         };
         const data = await AutoBumperPlugin.readFile(path);
         auto.logger.veryVerbose.log('  lines: "' + (data.lines.length) + '"');
         auto.logger.veryVerbose.log('  lineEnding: "' + (data.lineEnding === '\r' ? '\\r' : '\\r\\n') + '"');
         let modified = false;
         let content = [];
+        let check_next_line = false;
         for (const line of data.lines) {
             let replacedLine;
             if (safeMatching) {
-                // Use a comment to make sure we have the correct literal
-                // $auto-bumper
-                if (/\/\/[ \t]*\$auto-bumper[ \t]*/.test(line)) {
+                if (/\/\/[ \t]*\$auto-bumper-line[ \t]*/.test(line)) {
+                    // Check next line for changes
+                    check_next_line = true;
+                    replacedLine = line;
+                }
+                else if (check_next_line) {
+                    check_next_line = false;
+                    replacedLine = replaceRegex(line);
+                }
+                else if (/\/\/[ \t]*\$auto-bumper[ \t]*/.test(line)) {
                     replacedLine = replaceRegex(line);
                 }
                 else {
@@ -125,6 +146,11 @@ class AutoBumperPlugin {
         if (modified) {
             const joined_string = content.join(data.lineEnding);
             auto.logger.veryVerbose.log('  source: ' + joined_string);
+            if (regexReplace) {
+                // REPLACE the regex strings in the file
+                console.log("Should replace regex:");
+                console.log(regexReplace);
+            }
             fs_1.default.writeFile(path, joined_string, (err) => {
                 if (err)
                     throw err;
@@ -152,12 +178,11 @@ class AutoBumperPlugin {
         auto.hooks.getPreviousVersion.tapPromise(this.name, async () => auto.prefixRelease(await this.getVersion(auto)));
         auto.hooks.version.tapPromise(this.name, async ({ bump, dryRun, quiet }) => {
             const previousVersion = await this.getVersion(auto);
-            const releaseVersion = //inc(previousVersion, bump as ReleaseType);
-             this.snapshotRelease && bump === "patch"
+            const releaseVersion = this.snapshotRelease && bump === "patch"
                 ? previousVersion
                 : semver_1.inc(previousVersion, bump);
-            console.log('VERSION AUTO BUMPER: version ======================================================');
-            auto.logger.log.log('Version-AUTO-BUMPER: previous=' + previousVersion + ', release=' + releaseVersion);
+            auto.logger.verbose.log('VERSION AUTO BUMPER: version ======================================================');
+            auto.logger.verbose.log('Version-AUTO-BUMPER: previous=' + previousVersion + ', release=' + releaseVersion);
             if (releaseVersion) {
                 let files = this.options.files || [];
                 let modifications = false;
