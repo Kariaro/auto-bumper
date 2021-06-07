@@ -26,7 +26,7 @@ If this field is `true` then only lines that ends with `// $auto-bumper` will be
 If `false` all strings matching the version will be replaced in the specified files.
 
 
-```json
+```jsonc
 {
   "plugins": [
     [
