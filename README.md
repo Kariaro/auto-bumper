@@ -25,6 +25,14 @@ yarn add -D auto-plugin-auto-bumper
     [
       "auto-plugin-auto-bumper",
       {
+        /** (Experimental) (Optional) Default: false
+         * 
+         * When this field is true it will run a script called
+         * ".autobumper.js" in the root of a project.
+         *
+         * See #Scriptable for more information.
+         */
+        "scripted": true,
         "files": [
           {
             "path": "/path/to/resource",
@@ -41,13 +49,6 @@ yarn add -D auto-plugin-auto-bumper
              * be replaced.
              */
             "safeMatching": false,
-
-            /** (Experimental) (Optional) Default: false
-             * 
-             * When this field is true it will override "safeMatching"
-             * and all replacements will be routed through ".autobumper.js".
-             */
-            "scripted": true
           },
           {
             "path": "/another/resource"

@@ -39,18 +39,18 @@ const fileOptions = t.partial({
    * If `false`, all strings matching the version will
    * be replaced.
    */
-   safeMatching: t.boolean,
-
-   /**
-    * Default: `false`
-    * 
-    * When this field is `true` it will override `safeMatching`
-    * and all replacements will be routed through `.autobumper.js`.
-    */
-    scripted: t.boolean
+   safeMatching: t.boolean
 });
 
 const pluginOptions = t.partial({
+  /**
+   * Default: `false`
+   * 
+   * When this field is `true` it will override `safeMatching`
+   * and all replacements will be routed through `.autobumper.js`.
+   */
+  scripted: t.boolean,
+  
   /** A list of files that should be updated */
 	files: t.array(fileOptions)
 });
@@ -189,45 +189,42 @@ export default class AutoBumperPlugin implements IPlugin {
   /**
    * Bump verison using a script
    */
-  private static async bumpFileWithScript(auto: Auto, script: any, path: string, previousVersion: string, releaseVersion: string): Promise<boolean> {
-    if(!fs.existsSync(path)) {
-      auto.logger.log.warn('The file: "' + path + '" does not exist!');
-      return false;
-    }
-
-    auto.logger.verbose.log('File: "' + path + '", scripted=true');
+  private static async bumpFilesWithScript(auto: Auto, script: any, previousVersion: string, releaseVersion: string): Promise<boolean> {
+    let bumpFiles = script.bumpFiles;
+    if(!bumpFiles) return false;
     
-    try {
+    let modification = false;
+
+    for(let i in bumpFiles) {
+      let bump = bumpFiles[i];
+      if(!bump || !bump.task) continue;
+      let path = bump.path;
+
+      if(!fs.existsSync(path)) {
+        auto.logger.log.warn('The file: "' + path + '" does not exist!');
+        continue;
+      }
+  
+      auto.logger.verbose.log('File: "' + path + '", scripted=true');
       const data = fs.readFileSync(path).toString();
 
-      let bumpFiles = script.bumpFiles;
-      if(bumpFiles) {
-        for(let i in bumpFiles) {
-          let bump = bumpFiles[i];
-          if(!bump || (bump.path !== path) || !bump.task) continue;
+      const changed = bump.task(data, ''+previousVersion, ''+releaseVersion)
+      let modified = (changed !== data);
 
-          const changed = bump.task(data, ''+previousVersion, ''+releaseVersion)
-          let modified = (changed !== data);
+      auto.logger.veryVerbose.log('  modified: ' + modified);
+      if(modified) {
+        auto.logger.veryVerbose.log('  source: ' + changed);
 
-          auto.logger.veryVerbose.log('  modified: ' + modified);
-          if(modified) {
-            auto.logger.veryVerbose.log('  source: ' + changed);
+        fs.writeFile(path, changed, (err) => {
+          if(err) throw err;
+          auto.logger.log.info('Successfully modified: "' + path + "'");
+        });
 
-            fs.writeFile(path, changed, (err) => {
-              if(err) throw err;
-              auto.logger.log.info('Successfully modified: "' + path + "'");
-            });
-          }
-
-          return modified;
-        }
+        modification = true;
       }
-    } catch(error) {
-      auto.logger.verbose.error(error);
-      throw error;
     }
 
-    return false;
+    return modification;
   }
 
   /**
@@ -243,20 +240,9 @@ export default class AutoBumperPlugin implements IPlugin {
        */
       return await import(`${process.cwd()}/${scriptedBumperFile}`);
     } catch(error) {
-      /**
-       * If the file is not found we check if the file
-       * is needed. If the file is needed we generate an
-       * error.
-       */
-      for(let i = 0; i < files.length; i++) {
-        if(files[i].scripted) {
-          auto.logger.log.error(`Could not find "${scriptedBumperFile}" in root of project!`);
-          throw error;
-        }
-      }
+      auto.logger.log.error(`Could not find "${scriptedBumperFile}" in root of project!`);
+      throw error;
     }
-
-    return undefined;
   }
   
   /** Tap into auto plugin points. */
@@ -297,15 +283,15 @@ export default class AutoBumperPlugin implements IPlugin {
           let element = files[i];
           let path = element.path;
           if(path) {
-            if(element.scripted) {
-              let result = await AutoBumperPlugin.bumpFileWithScript(auto, scripted_module, path, previousVersion, releaseVersion);
-              modifications = modifications || result;
-            } else {
-              let safeMatching = element.safeMatching == undefined ? true:element.safeMatching;
-              let result = await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
-              modifications = modifications || result;
-            }
+            let safeMatching = element.safeMatching == undefined ? true:element.safeMatching;
+            let result = await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
+            modifications = modifications || result;
           }
+        }
+
+        if(this.options.scripted) {
+          let result = await AutoBumperPlugin.bumpFilesWithScript(auto, scripted_module, previousVersion, releaseVersion);
+          modifications = modifications || result;
         }
 
         if(modifications) {

@@ -17,6 +17,8 @@ declare const fileOptions: t.PartialC<{
      * be replaced.
      */
     safeMatching: t.BooleanC;
+}>;
+declare const pluginOptions: t.PartialC<{
     /**
      * Default: `false`
      *
@@ -24,8 +26,6 @@ declare const fileOptions: t.PartialC<{
      * and all replacements will be routed through `.autobumper.js`.
      */
     scripted: t.BooleanC;
-}>;
-declare const pluginOptions: t.PartialC<{
     /** A list of files that should be updated */
     files: t.ArrayC<t.PartialC<{
         /** The path of the file */
@@ -41,13 +41,6 @@ declare const pluginOptions: t.PartialC<{
          * be replaced.
          */
         safeMatching: t.BooleanC;
-        /**
-         * Default: `false`
-         *
-         * When this field is `true` it will override `safeMatching`
-         * and all replacements will be routed through `.autobumper.js`.
-         */
-        scripted: t.BooleanC;
     }>>;
 }>;
 export declare type IAutoBumperPluginOptions = t.TypeOf<typeof pluginOptions>;
@@ -84,7 +77,7 @@ export default class AutoBumperPlugin implements IPlugin {
     /**
      * Bump verison using a script
      */
-    private static bumpFileWithScript;
+    private static bumpFilesWithScript;
     /**
      * Load `.autobumper.js`
      */

@@ -36,16 +36,16 @@ const fileOptions = t.partial({
      * If `false`, all strings matching the version will
      * be replaced.
      */
-    safeMatching: t.boolean,
+    safeMatching: t.boolean
+});
+const pluginOptions = t.partial({
     /**
      * Default: `false`
      *
      * When this field is `true` it will override `safeMatching`
      * and all replacements will be routed through `.autobumper.js`.
      */
-    scripted: t.boolean
-});
-const pluginOptions = t.partial({
+    scripted: t.boolean,
     /** A list of files that should be updated */
     files: t.array(fileOptions)
 });
@@ -144,7 +144,7 @@ class AutoBumperPlugin {
             fs_1.default.writeFile(path, joined_string, (err) => {
                 if (err)
                     throw err;
-                auto.logger.log.log('Successfully modified: "' + path + "'");
+                auto.logger.log.info('Successfully modified: "' + path + "'");
             });
         }
         return modified;
@@ -152,39 +152,36 @@ class AutoBumperPlugin {
     /**
      * Bump verison using a script
      */
-    static async bumpFileWithScript(auto, script, path, previousVersion, releaseVersion) {
-        if (!fs_1.default.existsSync(path)) {
-            auto.logger.log.warn('The file: "' + path + '" does not exist!');
+    static async bumpFilesWithScript(auto, script, previousVersion, releaseVersion) {
+        let bumpFiles = script.bumpFiles;
+        if (!bumpFiles)
             return false;
-        }
-        try {
+        let modification = false;
+        for (let i in bumpFiles) {
+            let bump = bumpFiles[i];
+            if (!bump || !bump.task)
+                continue;
+            let path = bump.path;
+            if (!fs_1.default.existsSync(path)) {
+                auto.logger.log.warn('The file: "' + path + '" does not exist!');
+                continue;
+            }
+            auto.logger.verbose.log('File: "' + path + '", scripted=true');
             const data = fs_1.default.readFileSync(path).toString();
-            let bumpFiles = script.bumpFiles;
-            if (bumpFiles) {
-                for (let i in bumpFiles) {
-                    let bump = bumpFiles[i];
-                    if (!bump || (bump.path !== path) || !bump.task)
-                        continue;
-                    const changed = bump.task(data, '' + previousVersion, '' + releaseVersion);
-                    let modified = (changed !== data);
-                    auto.logger.veryVerbose.log('  modified: ' + modified);
-                    if (modified) {
-                        auto.logger.veryVerbose.log('  source: ' + changed);
-                        fs_1.default.writeFile(path, changed, (err) => {
-                            if (err)
-                                throw err;
-                            auto.logger.log.log('Successfully modified: "' + path + "'");
-                        });
-                    }
-                    return modified;
-                }
+            const changed = bump.task(data, '' + previousVersion, '' + releaseVersion);
+            let modified = (changed !== data);
+            auto.logger.veryVerbose.log('  modified: ' + modified);
+            if (modified) {
+                auto.logger.veryVerbose.log('  source: ' + changed);
+                fs_1.default.writeFile(path, changed, (err) => {
+                    if (err)
+                        throw err;
+                    auto.logger.log.info('Successfully modified: "' + path + "'");
+                });
+                modification = true;
             }
         }
-        catch (error) {
-            auto.logger.verbose.error(error);
-            throw error;
-        }
-        return false;
+        return modification;
     }
     /**
      * Load `.autobumper.js`
@@ -200,19 +197,9 @@ class AutoBumperPlugin {
             return await Promise.resolve().then(() => tslib_1.__importStar(require(`${process.cwd()}/${scriptedBumperFile}`)));
         }
         catch (error) {
-            /**
-             * If the file is not found we check if the file
-             * is needed. If the file is needed we generate an
-             * error.
-             */
-            for (let i = 0; i < files.length; i++) {
-                if (files[i].scripted) {
-                    auto.logger.log.error(`Could not find "${scriptedBumperFile}" in root of project!`);
-                    throw error;
-                }
-            }
+            auto.logger.log.error(`Could not find "${scriptedBumperFile}" in root of project!`);
+            throw error;
         }
-        return undefined;
     }
     /** Tap into auto plugin points. */
     apply(auto) {
@@ -244,16 +231,14 @@ class AutoBumperPlugin {
                     let element = files[i];
                     let path = element.path;
                     if (path) {
-                        if (element.scripted) {
-                            let result = await AutoBumperPlugin.bumpFileWithScript(auto, scripted_module, path, previousVersion, releaseVersion);
-                            modifications = modifications || result;
-                        }
-                        else {
-                            let safeMatching = element.safeMatching == undefined ? true : element.safeMatching;
-                            let result = await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
-                            modifications = modifications || result;
-                        }
+                        let safeMatching = element.safeMatching == undefined ? true : element.safeMatching;
+                        let result = await AutoBumperPlugin.bumpFile(auto, path, previousVersion, releaseVersion, safeMatching);
+                        modifications = modifications || result;
                     }
+                }
+                if (this.options.scripted) {
+                    let result = await AutoBumperPlugin.bumpFilesWithScript(auto, scripted_module, previousVersion, releaseVersion);
+                    modifications = modifications || result;
                 }
                 if (modifications) {
                     await core_1.execPromise("git", ["commit", "-am", `"Update @auto-bumper ${releaseVersion} [skip ci]"`, "--no-verify"]);
